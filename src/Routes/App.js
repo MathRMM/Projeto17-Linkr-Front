@@ -1,15 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Timeline from "../Pages/Timeline";
+import Context from "../Context";
 
 export default function App() {
-
-    return (
-        <BrowserRouter>
-            <section>
-                <h1>Teste</h1>
-            </section>
-            <Routes>
-
-            </Routes>
-        </BrowserRouter>
-    )
+  return (
+    <Context.Provider value={{}}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Timeline />} />
+        </Routes>
+      </BrowserRouter>
+    </Context.Provider>
+  );
 }
