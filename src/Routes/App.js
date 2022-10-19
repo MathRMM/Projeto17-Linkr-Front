@@ -1,7 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Timeline from "../Pages/Timeline";
+
 import Context from "../Context";
+import Timeline from "../Pages/Timeline";
+import UsersPage from "../Pages/UsersPage";
+
 
 export default function App() {
   return (
@@ -9,6 +12,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Timeline />} />
+          <Route path="/user/:id" element={<UsersPage/>} />
         </Routes>
       </BrowserRouter>
     </Context.Provider>

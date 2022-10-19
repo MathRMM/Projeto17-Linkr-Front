@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {API} from '../DB'
+import {API} from '../API'
 
 function getUser(id){
     return axios.get(API + `/users/${id}`)
