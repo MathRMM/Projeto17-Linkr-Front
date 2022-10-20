@@ -1,13 +1,22 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
+import EditPost from "./EditPost";
+import DeletePost from "./DeletePost";
 
 export default function Posts() {
+  const [idPost, setIdPost] = useState('1');
   return (
     <Container>
       <div className="post">
         <img src="https://www.rbsdirect.com.br/imagesrc/25287616.jpg?w=1024&h=768&a=c" />
         <div className="infor">
-          <h3>Juvenal Juvêncio </h3>
+          <div>
+            <h3>Juvenal Juvêncio </h3>
+            <span>
+              <EditPost/>
+              <DeletePost idPost = {idPost}/>
+            </span>
+          </div>
           <p>
             Muito maneiro esse tutorial de Material UI com React, deem uma
             olhada!
@@ -55,6 +64,18 @@ const Container = styled.div`
         font-size: 1.7rem;
 
         color: #b7b7b7;
+      }
+      div{
+        width: 92%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        span{
+          width: 10%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
       }
     }
   }
