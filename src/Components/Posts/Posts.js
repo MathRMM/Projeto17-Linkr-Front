@@ -1,17 +1,17 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-export default function Posts() {
+export default function Posts({ username, picUrl, postLink, postText, userId }) {
+  const navigate = useNavigate()
+
   return (
     <Container>
       <div className="post">
-        <img src="https://www.rbsdirect.com.br/imagesrc/25287616.jpg?w=1024&h=768&a=c" />
+        <img src={picUrl} alt='imagem usuario' />
         <div className="infor">
-          <h3>Juvenal Juvêncio </h3>
-          <p>
-            Muito maneiro esse tutorial de Material UI com React, deem uma
-            olhada!
-          </p>
+          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3>
+          <p>{postText}</p>
         </div>
       </div>
     </Container>
@@ -44,6 +44,7 @@ const Container = styled.div`
         font-style: normal;
         font-weight: 400;
         font-size: 1.9rem;
+        cursor: pointer;
 
         color: #ffffff;
       }
