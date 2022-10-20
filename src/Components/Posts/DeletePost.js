@@ -1,22 +1,52 @@
-
+import axios from "axios";
 import { useState } from "react";
 
 import Modal from "react-modal";
 import "./styles.css"
 
+import { ThreeDots } from  'react-loader-spinner'
+
 Modal.setAppElement("#root");
 
 export default function DeletePost({idPost}){
+        
+    const [habilitado, setHabilitado] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
-        const [isOpen, setIsOpen] = useState(false);
+    const token = 'tokendousuario';
 
         function toggleModal() {
+            
           setIsOpen(!isOpen);
         }
 
         function toggleModalAndDelete() {
+            setHabilitado(true)
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            axios.delete(`http://localhost:4000/timeline/${idPost}` , config
+        ).then(res =>{
+            if(res.status === 204){
+                setIsOpen(!isOpen);
+                setHabilitado(false)
+            }else{
+                alert('Tente Novamente')
+            }
+
+        }).catch(res=>{
             
-            setIsOpen(!isOpen);
+            if(res.response.status === 401) {
+                alert('Faça login novamente')
+            }
+            else{
+                alert('Não foi possível excluir o post')
+            }
+             setIsOpen(!isOpen);
+             setHabilitado(false)
+         }) 
           }
     
     return (
@@ -38,7 +68,18 @@ export default function DeletePost({idPost}){
             to delete this post?</h3>
             <div>
             <button onClick={toggleModal}>No, go back</button>
-            <button onClick={toggleModalAndDelete}>Yes, delete it</button>
+            <button onClick={toggleModalAndDelete}>
+                {!habilitado ?<h2>Yes, delete it</h2> : <ThreeDots 
+                height="80" 
+                width="80" 
+                radius="9"
+                color="#FFFFFF" 
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                />}
+                
+                </button>
             </div>
         </div>
         
@@ -48,5 +89,8 @@ export default function DeletePost({idPost}){
         </>
     );
 }
+
+
+
 
 

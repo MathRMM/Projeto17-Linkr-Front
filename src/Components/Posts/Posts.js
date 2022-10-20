@@ -4,7 +4,7 @@ import EditPost from "./EditPost";
 import DeletePost from "./DeletePost";
 
 export default function Posts() {
-  const [idPost, setIdPost] = useState('1');
+  const [idPost, setIdPost] = useState(11);
   return (
     <Container>
       <div className="post">
