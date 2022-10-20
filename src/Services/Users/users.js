@@ -2,12 +2,14 @@ import axios from 'axios';
 
 import {API} from '../API'
 
-function getUser(id){
-    return axios.get(API + `/users/${id}`)
+async function getUser(id, token){
+    const config = {authorization: 'Bearer ' + token}
+    return await axios.get(API + `/users/${id}`,config)
 }
 
-function getSearchUsers(username){
-    return axios.get(API + `/users/search/${username}`)
+function getSearchUsers(username, token){
+    const config = {authorization: 'Bearer ' + token}
+    return axios.get(API + `/users/search/${username}`, config)
 }
 
 export {

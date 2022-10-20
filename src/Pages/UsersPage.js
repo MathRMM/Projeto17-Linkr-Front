@@ -1,18 +1,40 @@
+import { useState, useEffect } from "react"
+import { useParams } from 'react-router-dom'
+
 import Main from "../Components/Main/Main"
 import Topo from "../Components/Header/Topo"
+import Posts from "../Components/Posts/Posts"
+import { getUser } from "../Services/Users/users"
 
-export default function UsersPage({userId = 1}) {
+export default function UsersPage() {
+    const [user, setUser] = useState({})
+    const userId = useParams().id
+
+    useEffect(() => {
+        getUser(userId)
+            .then(e => setUser(e.data))
+            .catch(e => console.error(e))
+    }, [userId])
+
     return (
-        <>
-            <Topo/>
+        <section>
+            <Topo />
             <Main>
-                <div>
-                    <img href={'imagem'}/>
-                    <h2>{`${'nome'} post's`}</h2>
+                <div >
+                    <h2>
+                        <img src={user.userPicUrl} alt='imagem do usuario' />
+                        {`${user.username} post's`}
+                    </h2>
                 </div>
-
-                
+                {user.posts?.map(e => <Posts
+                    username={user.username}
+                    picUrl={user.userPicUrl}
+                    userId={user.userId}
+                    postText={e.postText}
+                    postLink={e.postLink}
+                    key={e.postId}
+                />)}
             </Main>
-        </>
+        </section>
     )
 }
