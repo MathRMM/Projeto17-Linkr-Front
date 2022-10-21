@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useProfile } from "../../Services/useProfile";
 import { Link, useNavigate } from "react-router-dom";
 
-import { postSignUp } from "../../Services/SignIn-SignUp/login"; //mudar
+import { postSignUp } from "../../Services/SignIn-SignUp/login";
+
+import Context from "../../Context";
 
 import { LogoContainer, Logo, Titulo, SubTitle, Body, FormWrapper, SubmitButton, LinkWrapper } from "./styledComponents";
 
@@ -14,6 +17,11 @@ export function SignUp() { // TODO - criar uma rota q verifica se o usuário est
     const [urlRegister, setUrlRegister] = useState('');
 
     const navigate = useNavigate();
+
+    const [user, setUser] = useContext(Context);
+    const checkSession = useProfile(user, setUser);
+
+    useEffect(checkSession, []);
 
     function handleLogin(e) {
         if (isLoading) return;
@@ -29,7 +37,6 @@ export function SignUp() { // TODO - criar uma rota q verifica se o usuário est
         }
 
         postSignUp(body).then(res => {
-            console.log(res);
             setIsLoading(current => false);
             navigate('/');
         }).catch(e => {

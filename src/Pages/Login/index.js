@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useProfile } from "../../Services/useProfile";
 
 import { postLogin } from "../../Services/SignIn-SignUp/login";
 import Context from "../../Context";
@@ -15,6 +16,9 @@ export function Login() { // TODO - criar uma rota q verifica se o usuÃ¡rio estÃ
     const navigate = useNavigate();
 
     const [user, setUser] = useContext(Context);
+    const checkSession = useProfile(user, setUser);
+
+    useEffect(checkSession, []);
 
     function handleLogin(e) {
         if (isLoading) return;
@@ -29,12 +33,16 @@ export function Login() { // TODO - criar uma rota q verifica se o usuÃ¡rio estÃ
 
         postLogin(body).then(res => {
             setUser(current => ({
-                name: res.data.username,
+                username: res.data.username,
                 image: res.data.image,
                 token: res.data.token,
             }))
+            localStorage.setItem('username', res.data.username);
+            localStorage.setItem('image', res.data.image);
+            localStorage.setItem('token', res.data.token);
             setIsLoading(current => false);
             navigate('/timeline');
+            return;
         }).catch(e => {
             if ("message" in e.response.data) {
                 alert(e.response.data.message);

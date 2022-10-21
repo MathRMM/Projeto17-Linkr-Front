@@ -29,3 +29,14 @@ export function getLogOut(token) {
     })
     return promise;
 }
+
+export function getUserProfile(token) {
+    const promise = axios({
+        method: 'get',
+        url: `${API}/user-profile`,
+        headers: {
+            Authorization: 'Bearer ' + token,
+        }
+    })
+    return promise;
+}
