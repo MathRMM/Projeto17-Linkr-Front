@@ -5,7 +5,7 @@ import DeletePost from "./DeletePost";
 import TextEdit from "./TextEdit";
 
 export default function Posts() {
-  const [idPost, setIdPost] = useState(11);
+  const [idPost, setIdPost] = useState(13);
   const [editPost, setEditPost] = useState(false)
   const [text, setText] = useState("Muito Muito maneiro esse tutorial de Material UI com React, deem uma olhada!")
   console.log(editPost)

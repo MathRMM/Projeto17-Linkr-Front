@@ -5,9 +5,12 @@ import axios from "axios";
 
 export default function TextEdit ({text, idPost}){
     const [postText, setPostText] = useState(text)
-    const token = 'tokendousuario';
+    const token = 'tokendousuarioa';
+    const [enter, setEnter] = useState(false)
     
     function enviarNovaDescricao(){
+        console.log("entrou")
+        setEnter(true)
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -16,11 +19,12 @@ export default function TextEdit ({text, idPost}){
         axios.put(`http://localhost:4000/timeline/${idPost}`, {   
             postText
         },config).then(res =>{
+            alert('deu certo')
             console.log(res)
             if(res.status === 204){
                 console.log(204)
-            }else{
                 
+            }else{
                 alert('Tente Novamente')
             }
 
@@ -29,6 +33,10 @@ export default function TextEdit ({text, idPost}){
             if(res.response.status === 401) {
                 
                 alert('Faça login novamente')
+            }
+            else if(res.response.status === 404){
+                
+                alert('O post não existe')
             }
             else{
                 alert('Não foi possível excluir o post')
@@ -44,15 +52,13 @@ export default function TextEdit ({text, idPost}){
             
         }, []); 
         
-
-     
         
     return (
         <>
             <Imput>
-            <form onSubmit={enviarNovaDescricao}>
+            <form  onSubmit={enviarNovaDescricao}>
             <input  type="text" value = {postText} ref={textInputRef} required
-             onChange={e => setPostText(e.target.value)} />
+             onChange={e => setPostText(e.target.value)} disabled={enter} />
             
             </form>
             </Imput>
