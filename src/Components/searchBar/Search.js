@@ -20,6 +20,7 @@ export default function SearchBar() {
                         setAutoComplete(true)
                     }
                 })
+                .catch(setAutoComplete(false))
         } else {
             setUsers([])
         }

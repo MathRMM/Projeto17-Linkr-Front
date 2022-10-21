@@ -26,14 +26,18 @@ export default function UsersPage() {
                         {`${user.username} post's`}
                     </h2>
                 </div>
-                {user.posts?.map(e => <Posts
+                {user.posts?.map(e => {
+                    if(e){
+                        <Posts
                     username={user.username}
                     picUrl={user.userPicUrl}
                     userId={user.userId}
                     postText={e.postText}
                     postLink={e.postLink}
                     key={e.postId}
-                />)}
+                />
+                    } else return
+                })}
             </Main>
         </section>
     )
