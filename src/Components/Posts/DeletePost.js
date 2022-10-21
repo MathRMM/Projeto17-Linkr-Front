@@ -46,8 +46,8 @@ export default function DeletePost({idPost}){
             }
              setIsOpen(!isOpen);
              setHabilitado(false)
-         }) 
-          }
+        }) 
+    }
     
     return (
         <>

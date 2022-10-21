@@ -2,9 +2,13 @@ import { useState, useContext } from "react";
 import styled from "styled-components";
 import EditPost from "./EditPost";
 import DeletePost from "./DeletePost";
+import TextEdit from "./TextEdit";
 
 export default function Posts() {
   const [idPost, setIdPost] = useState(11);
+  const [editPost, setEditPost] = useState(false)
+  const [text, setText] = useState("Muito Muito maneiro esse tutorial de Material UI com React, deem uma olhada!")
+  console.log(editPost)
   return (
     <Container>
       <div className="post">
@@ -13,14 +17,15 @@ export default function Posts() {
           <div>
             <h3>Juvenal Juvêncio </h3>
             <span>
-              <EditPost/>
+              <EditPost setEditPost = {setEditPost} editPost = {editPost}/>
               <DeletePost idPost = {idPost}/>
             </span>
           </div>
-          <p>
+          {editPost? <TextEdit text = {text} idPost = {idPost}/> :<p>
             Muito maneiro esse tutorial de Material UI com React, deem uma
             olhada!
-          </p>
+          </p>}
+          
         </div>
       </div>
     </Container>
@@ -47,6 +52,7 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
+      width: 100%;
 
       h3 {
         font-family: "Lato";
