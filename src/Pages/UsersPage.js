@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from 'react-router-dom'
+import Context from "../Context"
 
 import Main from "../Components/Main/Main"
 import Topo from "../Components/Header/Topo"
@@ -7,11 +8,12 @@ import Posts from "../Components/Posts/Posts"
 import { getUser } from "../Services/Users/users"
 
 export default function UsersPage() {
+    const [account] = useContext(Context);
     const [user, setUser] = useState({})
     const userId = useParams().id
 
     useEffect(() => {
-        getUser(userId)
+        getUser(userId, account.token)
             .then(e => setUser(e.data))
             .catch(e => console.error(e))
     }, [userId])
