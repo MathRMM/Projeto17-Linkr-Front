@@ -7,12 +7,11 @@ import { SignUp } from "../Pages/Login/SignUp";
 import Timeline from "../Pages/Timeline";
 import UsersPage from "../Pages/UsersPage";
 
-
 const userObj = {
-  username: localStorage.getItem('username') ?? '',
-  image: localStorage.getItem('image') ?? '',
-  token: localStorage.getItem('token') ?? '',
-}
+  username: localStorage.getItem("username") ?? "",
+  image: localStorage.getItem("image") ?? "",
+  token: localStorage.getItem("token") ?? "",
+};
 
 export default function App() {
   const [user, setUser] = useState(userObj);

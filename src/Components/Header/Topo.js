@@ -1,14 +1,18 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import Context from "../../Context";
 import imgPerfil from "../imgs/foto_de_perfil.svg";
 import SearchBar from "../searchBar/Search";
 
 export default function Topo() {
+  const [user, setUser] = useContext(Context);
+
   return (
     <Header>
       <h1>linkr</h1>
-      <SearchBar/>
+      <SearchBar />
       <div>
-        <img src="https://www.rbsdirect.com.br/imagesrc/25287616.jpg?w=1024&h=768&a=c" />
+        <img src={user.image} />
       </div>
     </Header>
   );
