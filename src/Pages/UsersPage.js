@@ -29,15 +29,18 @@ export default function UsersPage() {
                     </h2>
                 </div>
                 {user.posts?.map(e => {
-                    if(e){
-                        <Posts
-                    username={user.username}
-                    picUrl={user.userPicUrl}
-                    userId={user.userId}
-                    postText={e.postText}
-                    postLink={e.postLink}
-                    key={e.postId}
-                />
+                    if (e) {
+                        return (
+                            <Posts
+                                username={user.username}
+                                picUrl={user.userPicUrl}
+                                userId={user.userId}
+                                postText={e.postText}
+                                postLink={e.postLink}
+                                postId = {e.postId}
+                                key={e.postId}
+                            />
+                        )
                     } else return
                 })}
             </Main>

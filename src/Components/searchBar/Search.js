@@ -1,19 +1,21 @@
 import { DebounceInput } from 'react-debounce-input'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 import { getSearchUsers } from '../../Services/Users/users';
+import Context from '../../Context';
 
 export default function SearchBar() {
     const [value, setValue] = useState('')
     const [users, setUsers] = useState([])
     const [autoComplete, setAutoComplete] = useState(false)
     const navigate = useNavigate()
+    const [user, setUser] =useContext(Context)
 
     useEffect(() => {
         if (value !== '') {
-            getSearchUsers(value)
+            getSearchUsers(value, user.token)
                 .then(e => {
                     if (e.data[0]) {
                         setUsers(e.data)
@@ -40,7 +42,7 @@ export default function SearchBar() {
         return (
             <h2 className='user' onClick={() => navigate(`/user/${user.id}`)}>
                 <img src={user.picUrl} alt='imagem do usuario'/>
-                {user?.username}
+                 {user?.username}
             </h2>
         )
     }
