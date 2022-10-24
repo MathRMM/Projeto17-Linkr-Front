@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Context from "../../Context";
 
 export default function NewPosts(props) {
-  console.log(props);
   return (
     <Container>
       <ul>

@@ -4,6 +4,7 @@ import Topo from "../Components/Header/Topo";
 import NewPosts from "../Components/Posts/NewPost";
 import axios from "axios";
 import Context from "../Context";
+import { Report } from "notiflix/build/notiflix-report-aio";
 
 export default function Timeline() {
   const [loading, setLoading] = useState("Publish");
@@ -31,8 +32,10 @@ export default function Timeline() {
         })
         .catch((err) => {
           console.log(err);
-          alert(
-            "An error occured while trying to fetch the posts, please refresh the page"
+          Report.failure(
+            "No Posts",
+            "An error occured while trying to fetch the posts, please refresh the page",
+            "ok"
           );
         });
     }, [])
@@ -46,16 +49,19 @@ export default function Timeline() {
   }
 
   if (posts.length < 0) {
-    alert("There are no posts yet");
+    Report.failure("No Posts", "There are no posts yet", "ok");
   }
+
+  console.log(form);
 
   function publish() {
     if (form.url === "") {
-      alert("Link vazio");
+      Report.failure("Error", "No Link", "ok");
       return;
     } else {
       const body = { ...form };
-      console.log(body);
+
+      setLoading("Publishing...");
 
       axios
         .post("http://localhost:5000/timeline", body, config)
@@ -69,10 +75,9 @@ export default function Timeline() {
           window.location.reload();
         })
         .catch((err) => {
-          setLoading("Publishing...");
           setBlock(true);
           setBlockButton(true);
-          alert("Houve um erro ao publicar seu link");
+          Report.failure("Error", "Houve um erro ao publicar seu link", "ok");
 
           setBlock(false);
           setBlockButton(false);
@@ -86,7 +91,7 @@ export default function Timeline() {
     <>
       <Topo />
       <Main>
-        <div>
+        <div className="global">
           <h2>timeline</h2>
 
           <div className="publish">
@@ -258,5 +263,55 @@ const Main = styled.div`
     font-size: 2rem;
 
     margin-left: 30%;
+  }
+
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    .publish {
+      margin-left: 8.6rem;
+
+      width: 100%;
+
+      border-radius: 0rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        display: none;
+      }
+
+      form {
+        p {
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 17px;
+          line-height: 20px;
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+
+    .global {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+
+      h2 {
+        margin-left: 12rem;
+      }
+    }
   }
 `;

@@ -51,4 +51,10 @@ const Header = styled.header`
 
     margin-right: 1.7rem;
   }
+
+  @media (max-width: 736px) {
+    width: 100%;
+
+    background-color: #151515;
+  }
 `;
