@@ -1,26 +1,41 @@
-import { useState, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import TextEdit from "./TextEdit";
 
 
-export default function Posts({ username, picUrl, postLink, postText, userId }) {
+import Context from "../../Context";
+import LikesButton from "./LikesButton";
+import { getLikes } from "../../Services/Posts/likes";
+
+
+export default function Posts({ username, picUrl, postLink, postText, userId, postId }) {
   const navigate = useNavigate()
-  const [idPost, setIdPost] = useState(16);
+  const [likes, setLikes] = useState({})
+  const [user] = useContext(Context)
   const [editPost, setEditPost] = useState(false)
   const [text, setText] = useState(postText)
+
+
+  useEffect(() => {
+    getLikes(postId, user.token)
+      .then(e => setLikes(e.data))
+      .catch(e => '')
+  }, [])
+
 
   return (
     <Container>
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
-            <EditPost editPost = {editPost}setEditPost = {setEditPost} />
-            <DeletePost idPost = {idPost}/>
+        <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
+        <EditPost editPost={editPost} setEditPost={setEditPost} />
+        <DeletePost postId={postId} />
         <div className="infor">
-          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3> 
-          {editPost? <TextEdit text = {text} idPost = {idPost}/> : <p>{postText}</p>}
+          <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
+          {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
         </div>
       </div>
     </Container>
@@ -29,6 +44,7 @@ export default function Posts({ username, picUrl, postLink, postText, userId }) 
 
 const Container = styled.div`
   .post {
+    position: relative;
     display: flex;
     padding-top: 1.6rem;
     padding-left: 1.8rem;
