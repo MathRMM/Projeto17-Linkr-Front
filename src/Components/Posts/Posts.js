@@ -16,7 +16,7 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
   useEffect(()=>{
     getLikes(postId, user.token)
     .then(e => setLikes(e.data))
-    .catch(e => console.log(e.request.response))
+    .catch(e => '')
   },[])
 
   return (
