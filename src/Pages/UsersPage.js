@@ -28,6 +28,7 @@ export default function UsersPage() {
                         {`${user.username} post's`}
                     </h2>
                 </div>
+               
                 {user.posts?.map(e => <Posts
                     username={user.username}
                     picUrl={user.userPicUrl}
@@ -35,6 +36,7 @@ export default function UsersPage() {
                     postText={e.postText}
                     postLink={e.postLink}
                     key={e.postId}
+                    
                 />)}
             </Main>
         </section>
