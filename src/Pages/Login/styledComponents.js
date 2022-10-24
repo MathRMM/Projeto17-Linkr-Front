@@ -9,22 +9,79 @@ const LogoContainer = styled.div`
     color: white;
     width: 70vw;
     height: 100vh;
+
+    @media (max-width: 1200px) and (min-width: 900px) {
+        width: 60vw;
+    }
+    
+    @media (max-width: 900px) and (min-width: 800px) {
+        width: 50vw;
+    }
+    
+    @media (max-width: 800px){
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+        width: 100%;
+        height: 30vh;
+    }
 `;
 
 const Logo = styled.div`
     padding-top: 29rem;
     padding-left: 13rem;
+    
+    @media (max-width: 800px){
+        padding-top: 2rem;
+        padding-left: 2rem;
+    }
 `;
 
 const Titulo = styled.div`
     font-size: 13rem;
     letter-spacing: 0.8rem;
+    
+    @media (max-width: 1200px) and (min-width: 900px) {
+        font-size: 11rem;
+    }
+    
+    @media (max-width: 900px) and (min-width: 800px) {
+        font-size: 9.5rem;
+    }
+    
+    @media (max-width: 800px) {
+        font-size: 9rem;
+        text-align: center;
+    }
+    
+    @media (max-width: 500px){
+        font-size: 7rem;
+    }
 `;
 
 const SubTitle = styled.div`
     font-size: 5rem;
     font-weight: 400;
     width: 28vw;
+    
+    @media (max-width: 1200px) and (min-width: 900px) {
+        font-size: 4.3rem;
+    }
+    
+    @media (max-width: 900px) and (min-width: 800px) {
+        font-size: 3rem;
+    }
+
+    @media (max-width: 800px) {
+        font-size: 3.5rem;
+        width: 65vw;
+        text-align: center;
+    }
+
+    @media (max-width: 500px){
+        font-size: 2.6rem;
+    }
 `;
 
 const Body = styled.div`
@@ -60,6 +117,27 @@ const FormWrapper = styled.div`
         padding: 1rem;
     }
     
+    @media (max-width: 1200px) and (min-width: 900px) {
+        width: 39.7vw; 
+    }
+    
+    @media (max-width: 900px) and (min-width: 800px) {
+        width: 49.7vw; 
+    }
+
+    @media (max-width: 800px) {
+        position: static;
+        width: 100%;
+        margin-top: 5rem;
+
+    }
+
+    @media (max-width: 500px){
+        form {
+            width: 90%;
+        }
+    }
+
     `;
 
 const SubmitButton = styled.button.attrs({ type: 'submit' })`
