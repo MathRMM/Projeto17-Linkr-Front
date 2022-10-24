@@ -7,7 +7,7 @@ export const useProfile = (context, setContext) => {
     const location = useLocation();
 
     const checkSession = () => {
-        if (context.token !== null && localStorage.getItem('token') !== null) {
+        if (context?.token !== null && localStorage.getItem('token') !== null) {
             getUserProfile(context.token).then(res => {
                 localStorage.setItem('username', res.data.username);
                 localStorage.setItem('image', res.data.image);
