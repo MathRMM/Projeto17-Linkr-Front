@@ -39,6 +39,7 @@ export function SignUp() { // TODO - criar uma rota q verifica se o usuário est
         postSignUp(body).then(res => {
             setIsLoading(current => false);
             navigate('/');
+            return;
         }).catch(e => {
             if ("message" in e.response.data) {
                 alert(e.response.data.message);

@@ -1,25 +1,28 @@
 import { DebounceInput } from 'react-debounce-input'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 import { getSearchUsers } from '../../Services/Users/users';
+import Context from '../../Context';
 
 export default function SearchBar() {
     const [value, setValue] = useState('')
     const [users, setUsers] = useState([])
     const [autoComplete, setAutoComplete] = useState(false)
     const navigate = useNavigate()
+    const [user] =useContext(Context)
 
     useEffect(() => {
         if (value !== '') {
-            getSearchUsers(value)
+            getSearchUsers(value, user.token)
                 .then(e => {
                     if (e.data[0]) {
                         setUsers(e.data)
                         setAutoComplete(true)
                     }
                 })
+                .catch(setAutoComplete(false))
         } else {
             setUsers([])
         }
@@ -39,7 +42,7 @@ export default function SearchBar() {
         return (
             <h2 className='user' onClick={() => navigate(`/user/${user.id}`)}>
                 <img src={user.picUrl} alt='imagem do usuario'/>
-                {user?.username}
+                 {user?.username}
             </h2>
         )
     }
@@ -67,18 +70,25 @@ export default function SearchBar() {
 
 const Search = styled.div`
     position: relative;
+    font-family: 'Lato';
     .input{
+        position: relative;
         width: 40rem ;
         height: 3rem;
         font-size: 20px;
         padding-left: 10px;
+        z-index: 20;
     }
 
     .autoComplete{
-        position: absolute;
         width: 40rem;
         box-sizing: content-box;
         background-color: #E7E7E7;
+        border-radius: 20px;
+
+        position: absolute;
+        z-index: 2;
+        top: 15px;
     }
 
     .autoComplete h2{
@@ -86,11 +96,18 @@ const Search = styled.div`
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 10px 0 10px 10px;
+        padding: 0px 0 10px 10px;
+        cursor: pointer;
 
         img{
             width: 4rem;
             height: 4rem;
+            border-radius: 50%;
+            margin-right: 5px;
         }
+    }
+
+    .autoComplete h2:first-child{
+        padding: 20px 0 10px 10px;
     }
 `;
