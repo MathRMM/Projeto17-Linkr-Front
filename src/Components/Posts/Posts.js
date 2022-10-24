@@ -31,12 +31,12 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
         <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
-        <EditPost editPost={editPost} setEditPost={setEditPost} />
-        <DeletePost postId={postId} />
         <div className="infor">
           <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
           {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
         </div>
+        <EditPost editPost={editPost} setEditPost={setEditPost} />
+        <DeletePost postId={postId} />
       </div>
     </Container>
   );
