@@ -1,17 +1,26 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import DeletePost from "./DeletePost";
+import EditPost from "./EditPost";
+import TextEdit from "./TextEdit";
+
 
 export default function Posts({ username, picUrl, postLink, postText, userId }) {
   const navigate = useNavigate()
+  const [idPost, setIdPost] = useState(16);
+  const [editPost, setEditPost] = useState(false)
+  const [text, setText] = useState(postText)
 
   return (
     <Container>
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
+            <EditPost editPost = {editPost}setEditPost = {setEditPost} />
+            <DeletePost idPost = {idPost}/>
         <div className="infor">
-          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3>
-          <p>{postText}</p>
+          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3> 
+          {editPost? <TextEdit text = {text} idPost = {idPost}/> : <p>{postText}</p>}
         </div>
       </div>
     </Container>
@@ -56,6 +65,15 @@ const Container = styled.div`
         font-size: 1.7rem;
 
         color: #b7b7b7;
+      }
+      span{
+          width: 10%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          div{
+            margin-left: 10%;
+          }
       }
     }
   }

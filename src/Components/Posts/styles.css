@@ -1,0 +1,91 @@
+.App {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    
+  }
+  
+  .mymodal {
+    width: 35%;
+    height: 30%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+    border: 1px solid #ccc;
+
+    background: #333333;
+    overflow: auto;
+    border-radius: 30px;
+    outline: none;
+    padding: 20px;
+    color: #FFFFFF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .mymodal div{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+  }
+  .mymodal div h3{
+    padding-left: 10%;
+    font-size: 2rem;
+  }
+
+  .mymodal div div{
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+
+  }
+  .mymodal div div button:first-child {
+    margin: 10px;
+    width: 45%;
+    height: 25%;
+    font-size: 1.2rem;
+    background-color: #FFFFFF;
+    border: #FFFFFF solid;
+    border-radius: 5px;
+  }
+  .mymodal div div button{
+    margin: 10px;
+    width: 45%;
+    height: 25%;
+    font-size: 1.2rem;
+    background-color: #1877F2;
+    border: #1877F2 solid;
+    border-radius: 5px;
+    
+  }
+  
+  .myoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.90);
+  }
+  
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+  }
+  
+  .ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+  
+  .ReactModal__Overlay--before-close {
+    opacity: 0;
+  }
+  

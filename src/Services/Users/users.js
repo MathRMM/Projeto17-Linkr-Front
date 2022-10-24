@@ -10,7 +10,7 @@ async function getUser(id, token) {
 }
 
 function getSearchUsers(username, token) {
-    const config = { authorization: 'Bearer ' + token }
+    const config = { Authorization: 'Bearer ' + token }
     return axios.get(API + `/users/search/${username}`, {
         headers: config
     })
