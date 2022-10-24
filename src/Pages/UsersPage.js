@@ -16,7 +16,7 @@ export default function UsersPage() {
         getUser(userId, account.token)
             .then(e => setUser(e.data))
             .catch(e => console.error(e))
-    }, [userId])
+    }, [account.token, userId])
 
     return (
         <section>

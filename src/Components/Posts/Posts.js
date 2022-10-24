@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+import DeletePost from "./DeletePost";
+import EditPost from "./EditPost";
+import TextEdit from "./TextEdit";
+
 
 import Context from "../../Context";
 import LikesButton from "./LikesButton";
@@ -11,6 +15,9 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
   const navigate = useNavigate()
   const [likes, setLikes] = useState({})
   const [user] = useContext(Context)
+  const [idPost, setIdPost] = useState(16);
+  const [editPost, setEditPost] = useState(false)
+  const [text, setText] = useState(postText)
 
 
   useEffect(()=>{
@@ -19,14 +26,17 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
     .catch(e => '')
   },[])
 
+
   return (
     <Container>
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
         <LikesButton postId = {postId} userLike={likes.userLike} likes = {likes} token = {user.token}/>
+            <EditPost editPost = {editPost}setEditPost = {setEditPost} />
+            <DeletePost idPost = {idPost}/>
         <div className="infor">
-          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3>
-          <p>{postText}</p>
+          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3> 
+          {editPost? <TextEdit text = {text} idPost = {idPost}/> : <p>{postText}</p>}
         </div>
       </div>
     </Container>
@@ -72,6 +82,15 @@ const Container = styled.div`
         font-size: 1.7rem;
 
         color: #b7b7b7;
+      }
+      span{
+          width: 10%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          div{
+            margin-left: 10%;
+          }
       }
     }
   }
