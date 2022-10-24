@@ -1,3 +1,3 @@
-const API = 'http://localhost:5000'
+const API = 'https://database-linkr.herokuapp.com/'
 
 export {API}
