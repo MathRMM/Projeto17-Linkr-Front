@@ -1,35 +1,26 @@
-import axios from "axios";
-import { useState } from "react";
-import { API } from "../../Services/API";
-
+import { useState, useContext } from "react";
 import Modal from "react-modal";
-import "./styles.css"
-
 import { ThreeDots } from  'react-loader-spinner'
+
+import Context from "../../Context";
+import { deletePost } from "../../Services/Posts/deleteAndUpdate";
+
+import "./styles.css"
 
 Modal.setAppElement("#root");
 
-export default function DeletePost({idPost}){
-        
+export default function DeletePost({postId}){
     const [habilitado, setHabilitado] = useState(false)
     const [isOpen, setIsOpen] = useState(false);
-
-    const token = 'tokendousuario';
+    const [user] = useContext(Context);
 
         function toggleModal() {
-            
           setIsOpen(!isOpen);
         }
 
         function toggleModalAndDelete() {
-            setHabilitado(true)
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-            axios.delete(`${API}/timeline/${idPost}` , config
-        ).then(res =>{
+            setHabilitado(true);
+            deletePost(postId, user.token).then(res =>{
             if(res.status === 204){
                 setIsOpen(!isOpen);
                 setHabilitado(false)

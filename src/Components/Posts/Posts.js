@@ -15,28 +15,27 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
   const navigate = useNavigate()
   const [likes, setLikes] = useState({})
   const [user] = useContext(Context)
-  const [idPost, setIdPost] = useState(16);
   const [editPost, setEditPost] = useState(false)
   const [text, setText] = useState(postText)
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getLikes(postId, user.token)
-    .then(e => setLikes(e.data))
-    .catch(e => '')
-  },[])
+      .then(e => setLikes(e.data))
+      .catch(e => '')
+  }, [])
 
 
   return (
     <Container>
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
-        <LikesButton postId = {postId} userLike={likes.userLike} likes = {likes} token = {user.token}/>
-            <EditPost editPost = {editPost}setEditPost = {setEditPost} />
-            <DeletePost idPost = {idPost}/>
+        <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
+        <EditPost editPost={editPost} setEditPost={setEditPost} />
+        <DeletePost postId={postId} />
         <div className="infor">
-          <h3 onClick={()=> navigate(`/user/${userId}`)}>{username} </h3> 
-          {editPost? <TextEdit text = {text} idPost = {idPost}/> : <p>{postText}</p>}
+          <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
+          {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
         </div>
       </div>
     </Container>
