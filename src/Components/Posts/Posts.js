@@ -5,6 +5,9 @@ import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import TextEdit from "./TextEdit";
 
+import CommentsButton from "./CommentsButton";
+import CommentText from "./CommentsText";
+
 
 import Context from "../../Context";
 import LikesButton from "./LikesButton";
@@ -17,6 +20,7 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
   const [user] = useContext(Context)
   const [editPost, setEditPost] = useState(false)
   const [text, setText] = useState(postText)
+  const [commentOpen, setCommentOpen] = useState(false);
 
 
   useEffect(() => {
@@ -24,26 +28,64 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
       .then(e => setLikes(e.data))
       .catch(e => '')
   }, [])
-
+  console.log(commentOpen);
 
   return (
     <Container>
       <div className="post">
         <img src={picUrl} alt='imagem usuario' />
         <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
+       <CommentsButton commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
         <div className="infor">
           <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
           {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
         </div>
         <EditPost editPost={editPost} setEditPost={setEditPost} />
         <DeletePost postId={postId} />
+        <div className="comments">
+          <div>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>  
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>  
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          <span>teste teste teste</span>
+          
+          </div>
+          <div>
+          <CommentText text={text} postId={postId} />
+          </div>
+        </div>
       </div>
+      
+      
     </Container>
+    
   );
 }
 
 const Container = styled.div`
+height: auto;
+background-color: #1E1E1E;
+padding-bottom: 10px;
+position: relative;
+height: 55.2rem;
+box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+border-radius: 1.6rem;
   .post {
+    box-sizing: border-box;
     position: relative;
     display: flex;
     padding-top: 1.6rem;
@@ -58,11 +100,13 @@ const Container = styled.div`
     margin-bottom: 2.9rem;
 
     background-color: #171717;
+    z-index: 10;
 
     .infor {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
+      
 
       h3 {
         font-family: "Lato";
@@ -89,8 +133,32 @@ const Container = styled.div`
           align-items: center;
           div{
             margin-left: 10%;
+            
           }
       }
     }
+  }
+  .comments {
+    
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.6rem;
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+    font-size: 40px;
+
+    border-radius: 1.6rem;
+
+    width: 61.1rem;
+    height: 27.6rem;
+    position: absolute;
+    
+    top: 28rem;
+    left: 0;
+
+    margin-bottom: 2.9rem;
+    overflow-y: auto;
+    
+
   }
 `;
