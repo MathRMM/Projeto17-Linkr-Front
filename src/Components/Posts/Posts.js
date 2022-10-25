@@ -1,42 +1,49 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import TextEdit from "./TextEdit";
-
-
 import Context from "../../Context";
 import LikesButton from "./LikesButton";
 import { getLikes } from "../../Services/Posts/likes";
 
 
-export default function Posts({ username, picUrl, postLink, postText, userId, postId }) {
+
+export default function Posts({ dataPost, picUrl, username, userId }) {
   const navigate = useNavigate()
   const [likes, setLikes] = useState({})
   const [user] = useContext(Context)
   const [editPost, setEditPost] = useState(false)
-  const [text, setText] = useState(postText)
+  const [text, setText] = useState(dataPost.postText)
+  const [metaData, setMetadata] = useState([])
 
 
   useEffect(() => {
-    getLikes(postId, user.token)
+    getLikes(dataPost.postId, user.token)
       .then(e => setLikes(e.data))
       .catch(e => '')
   }, [])
 
-
   return (
     <Container>
       <div className="post">
-        <img src={picUrl} alt='imagem usuario' />
-        <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
-        <div className="infor">
-          <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
-          {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
+        <div className="top">
+          <img src={picUrl} alt='imagem usuario' />
+          <LikesButton postId={dataPost.postId} userLike={likes.userLike} likes={likes} token={user.token} />
+          <div className="infor">
+            <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
+            {editPost ? <TextEdit text={text} postId={dataPost.postId} /> : <p>{dataPost.postText}</p>}
+          </div>
+          <EditPost editPost={editPost} setEditPost={setEditPost} />
+          <DeletePost postId={dataPost.postId} />
         </div>
-        <EditPost editPost={editPost} setEditPost={setEditPost} />
-        <DeletePost postId={postId} />
+
+        <div className="dataLink">
+          {/* Aqui vai os metadados
+           tem link que não recebe os metadados, ficar de olho notion para vizualizar os tipos de dados recebidos */}
+        </div>
       </div>
     </Container>
   );
@@ -58,6 +65,11 @@ const Container = styled.div`
     margin-bottom: 2.9rem;
 
     background-color: #171717;
+
+    .top{
+      display: flex;
+      justify-content: space-between;
+    }
 
     .infor {
       display: flex;

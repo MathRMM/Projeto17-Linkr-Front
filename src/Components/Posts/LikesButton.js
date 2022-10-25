@@ -34,7 +34,7 @@ export default function LikesButton({ postId, likes, token, userLike }) {
       if (!profiles[0]) {
         return ('Você')
       } else {
-        return ('Você and ' + profiles[0].username)
+        return ('Você and ' + profiles[0].username + ' and other ' + (countLikes - 2))
       }
     } else {
       if (!profiles[0]) {
