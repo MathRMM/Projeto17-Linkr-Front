@@ -63,12 +63,6 @@ export default function LikesButton({ postId, likes, token, userLike }) {
 }
 
 const Container = styled.div`
-  position: absolute;
-  top: 90px;
-  left: 10px;
-  color: #ffffff;
-  text-align: center;
-  width: max-content;
 
   svg {
     font-size: 20px;
@@ -77,9 +71,6 @@ const Container = styled.div`
   }
 
   p {
-    font-family: 'Lato';
-    position: relative;
-    font-weight: 400;
     font-size: 15px;
     line-height: 30px;
   }

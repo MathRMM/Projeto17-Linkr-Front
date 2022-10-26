@@ -17,8 +17,6 @@ export default function Timeline() {
       .then(e => setPosts(e.data))
   }, [])
 
-  console.log(user)
-
   return (
     <>
       <Topo />
