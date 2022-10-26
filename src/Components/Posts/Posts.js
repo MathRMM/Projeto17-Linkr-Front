@@ -7,6 +7,7 @@ import TextEdit from "./TextEdit";
 
 import CommentsButton from "./CommentsButton";
 import CommentText from "./CommentsText";
+import Comments from "./Comments";
 
 
 import Context from "../../Context";
@@ -45,11 +46,7 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
           <DeletePost postId={postId} />
         </div>
         {commentOpen? <CaixaComent>
-          <span>awdwdawdawdda</span>
-          <hr></hr>
-          <span>awdwdawdawdda</span>
-          <hr></hr>
-          
+          <Comments/>
 
           <div>
           <img src={picUrl} />
@@ -86,16 +83,7 @@ const CaixaComent = styled.div`
 
   margin-bottom: 2.9rem;
   overflow-y: auto;
-  
-  hr {
-    width: 100%;
-	  border: 0;
-	  border-top: 0.15rem solid #353535;
-  }
     
-    
-  
-
   div:last-child{
     display: flex;
   }
