@@ -32,58 +32,91 @@ export default function Posts({ username, picUrl, postLink, postText, userId, po
 
   return (
     <Container>
-      <div className="post">
-        <img src={picUrl} alt='imagem usuario' />
-        <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
-       <CommentsButton commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
-        <div className="infor">
-          <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
-          {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
-        </div>
-        <EditPost editPost={editPost} setEditPost={setEditPost} />
-        <DeletePost postId={postId} />
-        <div className="comments">
-          <div>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>  
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>  
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          <span>teste teste teste</span>
-          
+      <CommentContainer>
+        <div className="post">
+          <img src={picUrl} alt='imagem usuario' />
+          <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
+        <CommentsButton commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
+          <div className="infor">
+            <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
+            {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
           </div>
+          <EditPost editPost={editPost} setEditPost={setEditPost} />
+          <DeletePost postId={postId} />
+        </div>
+        {commentOpen? <CaixaComent>
+          <span>awdwdawdawdda</span>
+          <hr></hr>
+          <span>awdwdawdawdda</span>
+          <hr></hr>
+          
+
           <div>
+          <img src={picUrl} />
           <CommentText text={text} postId={postId} />
           </div>
-        </div>
-      </div>
-      
-      
+        
+      </CaixaComent>
+      : <></>}
+        
+      </CommentContainer>
     </Container>
     
   );
 }
 
+
+const CaixaComent = styled.div`
+  background-color: #1E1E1E;
+  width: 61.1rem;
+  
+ 
+  position: relative;
+
+  box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+  border-radius: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.6rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  font-size: 40px;
+  left: 0;
+
+  margin-bottom: 2.9rem;
+  overflow-y: auto;
+  
+  hr {
+    width: 100%;
+	  border: 0;
+	  border-top: 0.15rem solid #353535;
+  }
+    
+    
+  
+
+  div:last-child{
+    display: flex;
+  }
+  
+`
+
+const CommentContainer = styled.div`
+    box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    border-radius: 1.6rem;
+
+    width: 61.1rem;
+    height: 100%;
+
+    margin-bottom: 2.9rem;
+
+    background-color: #1E1E1E;
+`
+
 const Container = styled.div`
-height: auto;
-background-color: #1E1E1E;
-padding-bottom: 10px;
+
 position: relative;
-height: 55.2rem;
-box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-border-radius: 1.6rem;
   .post {
     box-sizing: border-box;
     position: relative;
@@ -138,27 +171,11 @@ border-radius: 1.6rem;
       }
     }
   }
-  .comments {
-    
-    display: flex;
-    flex-direction: column;
-    padding-top: 1.6rem;
-    padding-left: 1.8rem;
-    padding-right: 1.8rem;
-    font-size: 40px;
-
-    border-radius: 1.6rem;
-
-    width: 61.1rem;
-    height: 27.6rem;
-    position: absolute;
-    
-    top: 28rem;
-    left: 0;
-
-    margin-bottom: 2.9rem;
-    overflow-y: auto;
-    
-
-  }
+  
 `;
+
+
+
+
+
+

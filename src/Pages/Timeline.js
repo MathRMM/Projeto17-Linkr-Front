@@ -35,6 +35,18 @@ export default function Timeline() {
           </div>
 
           <Posts />
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
+          <p>Teste</p>
         </div>
       </Main>
     </>
