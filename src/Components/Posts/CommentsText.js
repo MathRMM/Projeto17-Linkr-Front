@@ -75,8 +75,6 @@ const Imput = styled.div`
     width: 57.4rem;
     height: auto;
     
-    
-
     form{
         width: 100%;
        

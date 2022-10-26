@@ -75,15 +75,14 @@ const CaixaComent = styled.div`
 
   display: flex;
   flex-direction: column;
-  padding-top: 1.6rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   font-size: 40px;
   left: 0;
-
+  
   margin-bottom: 2.9rem;
   overflow-y: auto;
-    
+  
   div:last-child{
     display: flex;
   }
