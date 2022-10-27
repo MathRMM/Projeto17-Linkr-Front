@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { useState } from "react";
 
 export default function CommentsButton({setCommentOpen, commentOpen}){
-    
+    const [nComments, setNComments] = useState('10')
 
     function handleClick(){
         setCommentOpen(!commentOpen)
@@ -11,7 +12,7 @@ export default function CommentsButton({setCommentOpen, commentOpen}){
     return (
         <Container onClick={handleClick}>
             <IoChatbubbleEllipsesOutline />
-            <p>0 comments</p>
+            <p>{nComments} comments</p>
         </Container>
     )
 }
