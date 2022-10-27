@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import { API } from '../API'
 
-async function getUser(id, token) {
+async function getUser(id, token, page) {
     const config = { authorization: 'Bearer ' + token }
-    return await axios.get(API + `/users/${id}`, {
+    return await axios.get(API + `/users/${id}?page=${page}`, {
         headers: config
     })
 }

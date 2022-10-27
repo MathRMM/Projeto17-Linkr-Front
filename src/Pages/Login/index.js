@@ -32,7 +32,9 @@ export function Login() { // TODO - criar uma rota q verifica se o usuÃ¡rio estÃ
         }
 
         postLogin(body).then(res => {
+            console.log(res.data)
             setUser(current => ({
+                id : res.data.id,
                 username: res.data.username,
                 image: res.data.image,
                 token: res.data.token,
