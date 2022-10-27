@@ -144,3 +144,8 @@ body {
   font-family: "Oswald", sans-serif;
   font-family: "Passion One", cursive;
 }
+
+html, body, #root{
+  width: 100vw;
+  height: 100vh;
+}
