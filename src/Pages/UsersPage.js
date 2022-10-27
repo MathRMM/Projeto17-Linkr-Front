@@ -35,9 +35,7 @@ export default function UsersPage() {
                                 username={user.username}
                                 picUrl={user.userPicUrl}
                                 userId={user.userId}
-                                postText={e.postText}
-                                postLink={e.postLink}
-                                postId = {e.postId}
+                                dataPost={e}
                                 key={e.postId}
                             />
                         )
