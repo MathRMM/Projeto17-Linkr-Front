@@ -15,7 +15,15 @@ async function upPost(post, token){
     return await axios.post(API + '/timeline', post, config)
 }
 
+async function updatePost(token){
+    const config = {
+        headers:{ authorization: 'Bearer ' + token}
+    }
+    return await axios.get(API + '/count/posts', config)
+}
+
 export {
     getPostsApi,
-    upPost
+    upPost,
+    updatePost
 }

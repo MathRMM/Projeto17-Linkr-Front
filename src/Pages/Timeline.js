@@ -3,12 +3,12 @@ import styled from "styled-components";
 import InfiniteScroll from 'react-infinite-scroller';
 
 import Context from "../Context";
-import Topo from "../Components/Header/Topo";
 import Posts from "../Components/Posts/Posts";
 import Main from '../Components/Main/Main';
 import NewPost from "../Components/Posts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
 import Loading from '../Components/Posts/helpers/Loading';
+import CountPosts from "../Components/Posts/helpers/CountPosts";
 
 
 export default function Timeline() {
@@ -60,14 +60,23 @@ export default function Timeline() {
         <h2>timeline</h2>
 
         <NewPost user={user} reload={reload} setReload={setReload} />
-        
-          {posts?.map(e => <Posts
-            dataPost={e}
-            picUrl={e.picUrl}
-            username={e.username}
-            userId={e.userId}
-            key={e.postId}
-          />)}
+        <CountPosts 
+          user={user} 
+          reload={reload} 
+          setReload={setReload} 
+          page={page} 
+          setPage={setPage}
+          posts ={posts} 
+          setPosts = {setPosts} 
+        />
+
+        {posts?.map(e => <Posts
+          dataPost={e}
+          picUrl={e.picUrl}
+          username={e.username}
+          userId={e.userId}
+          key={e.postId}
+        />)}
         {hasMore? <Loading /> : ''}
       </div>
     </Main>

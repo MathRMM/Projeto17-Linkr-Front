@@ -24,8 +24,6 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
 
   }, [])
 
-  console.log(user)
-
   return (
     <Container>
       <div className="post">
@@ -35,7 +33,7 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
             <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
             {editPost ? <TextEdit text={text} postId={dataPost.postId} /> : <p>{dataPost.postText}</p>}
           </div>
-          {user.id === userId ? <div className="editDelete">
+          {Number(user.id) === Number(userId) ? <div className="editDelete">
             <EditPost editPost={editPost} setEditPost={setEditPost} />
             <DeletePost postId={dataPost.postId} />
           </div> : ''}
@@ -52,7 +50,7 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
           }}
         >
           {
-            dataPost.metaTitle ?
+            dataPost.metaTitle && dataPost.metaImage ?
               (<>
                 <div className="postContext">
                   <h1 className="title">{dataPost.metaTitle}</h1>
