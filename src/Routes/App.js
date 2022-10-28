@@ -6,6 +6,7 @@ import { Login } from "../Pages/Login";
 import { SignUp } from "../Pages/Login/SignUp";
 import Timeline from "../Pages/Timeline";
 import UsersPage from "../Pages/UsersPage";
+import PostTag from "../Components/Posts/PostTag";
 
 const userObj = {
   username: localStorage.getItem("username") ?? "",
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/user/:id" element={<UsersPage />} />
+          <Route path="/hashtag/:hashtag" element={<PostTag />} />
         </Routes>
       </BrowserRouter>
     </Context.Provider>

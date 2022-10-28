@@ -5,6 +5,7 @@ import NewPosts from "../Components/Posts/NewPost";
 import axios from "axios";
 import Context from "../Context";
 import { Report } from "notiflix/build/notiflix-report-aio";
+import Trending from "../Components/Trending/Trending";
 
 export default function Timeline() {
   const [loading, setLoading] = useState("Publish");
@@ -52,8 +53,6 @@ export default function Timeline() {
     Report.failure("No Posts", "There are no posts yet", "ok");
   }
 
-  console.log(form);
-
   function publish() {
     if (form.url === "") {
       Report.failure("Error", "No Link", "ok");
@@ -90,59 +89,73 @@ export default function Timeline() {
   return (
     <>
       <Topo />
-      <Main>
+      <Container>
         <div className="global">
           <h2>timeline</h2>
 
-          <div className="publish">
-            <img src={user.image} />
-            <div className="inputs">
-              <form>
-                <p>What are you going to share today?</p>
-                <input
-                  placeholder="http://..."
-                  type="text"
-                  name="url"
-                  onChange={handleForm}
-                  value={form.url}
-                  disabled={block}
-                  required
-                />
-                <div>
+          <div className="screen">
+            <div className="publish">
+              <img src={user.image} />
+              <div className="inputs">
+                <form>
+                  <p>What are you going to share today?</p>
                   <input
-                    className="text"
+                    placeholder="http://..."
                     type="text"
-                    placeholder="Awesome article about #javascript"
-                    name="comment"
+                    name="url"
                     onChange={handleForm}
-                    value={form.comment}
+                    value={form.url}
                     disabled={block}
+                    required
                   />
-                </div>
+                  <div>
+                    <input
+                      className="text"
+                      type="text"
+                      placeholder="Awesome article about #javascript"
+                      name="comment"
+                      onChange={handleForm}
+                      value={form.comment}
+                      disabled={block}
+                    />
+                  </div>
 
-                <button disabled={blockButton} onClick={publish}>
-                  {loading}
-                </button>
-              </form>
+                  <button disabled={blockButton} onClick={publish}>
+                    {loading}
+                  </button>
+                </form>
+              </div>
             </div>
+            <Trending />
           </div>
+
           {posts.length > 0 ? (
             <NewPosts posts={posts} />
           ) : (
             <p className="NoPosts">There are no posts yet</p>
           )}
         </div>
-      </Main>
+      </Container>
     </>
   );
 }
 
-const Main = styled.div`
+const Container = styled.div`
+  .screen {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 2.5rem;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  width: 80%;
+  margin-right: 2.5rem;
   h2 {
     margin-top: 15rem;
     margin-bottom: 4.3rem;

@@ -1,8 +1,14 @@
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ReactTagify } from "react-tagify";
 import styled from "styled-components";
-import Context from "../../Context";
 
 export default function NewPosts(props) {
+  const tagStyle = {
+    color: "white",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
+  const navigate = useNavigate();
   return (
     <Container>
       <ul>
@@ -13,7 +19,16 @@ export default function NewPosts(props) {
               <div className="colum">
                 <div className="infor">
                   <h3>{e.username}</h3>
-                  <p>{e.postText}</p>
+                  <p>
+                    <ReactTagify
+                      tagStyle={tagStyle}
+                      tagClicked={(hashtag) =>
+                        navigate(`/hashtag/${hashtag.replace("#", "")}`)
+                      }
+                    >
+                      {e.postText}
+                    </ReactTagify>
+                  </p>
                 </div>
 
                 <div

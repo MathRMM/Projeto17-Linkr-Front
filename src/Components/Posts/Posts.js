@@ -5,7 +5,6 @@ import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import TextEdit from "./TextEdit";
 
-<<<<<<< HEAD
 export default function Posts({
   username,
   picUrl,
@@ -14,46 +13,14 @@ export default function Posts({
   userId,
 }) {
   const navigate = useNavigate();
-=======
-
-import Context from "../../Context";
-import LikesButton from "./LikesButton";
-import { getLikes } from "../../Services/Posts/likes";
-
-
-export default function Posts({ username, picUrl, postLink, postText, userId, postId }) {
-  const navigate = useNavigate()
-  const [likes, setLikes] = useState({})
-  const [user] = useContext(Context)
-  const [editPost, setEditPost] = useState(false)
-  const [text, setText] = useState(postText)
-
-
-  useEffect(() => {
-    getLikes(postId, user.token)
-      .then(e => setLikes(e.data))
-      .catch(e => '')
-  }, [])
-
->>>>>>> main
 
   return (
     <Container>
       <div className="post">
-<<<<<<< HEAD
         <img src={picUrl} alt="imagem usuario" />
         <div className="infor">
           <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
           <p>{postText}</p>
-=======
-        <img src={picUrl} alt='imagem usuario' />
-        <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
-        <EditPost editPost={editPost} setEditPost={setEditPost} />
-        <DeletePost postId={postId} />
-        <div className="infor">
-          <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
-          {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
->>>>>>> main
         </div>
       </div>
     </Container>
@@ -91,14 +58,14 @@ const Container = styled.div`
         font-size: 1.7rem;
         color: #b7b7b7;
       }
-      span{
-          width: 10%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          div{
-            margin-left: 10%;
-          }
+      span {
+        width: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        div {
+          margin-left: 10%;
+        }
       }
     }
   }
