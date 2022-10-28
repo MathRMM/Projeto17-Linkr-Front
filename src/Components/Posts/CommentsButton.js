@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import Context from "../../Context";
 import { API } from "../../Services/API";
 
-export default function CommentsButton({postId, setCommentOpen, commentOpen}){
-    console.log(postId)
+export default function CommentsButton({setComments, postId, setCommentOpen, commentOpen}){
+    
     const [nComments, setNComments] = useState(0)
     const [user] = useContext(Context);
     
@@ -25,12 +25,31 @@ export default function CommentsButton({postId, setCommentOpen, commentOpen}){
             console.log(res)
         })
 
-    function handleClick(){
+    function HandleClick(){
+
+    const id = postId;
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    }
+    
+        axios.get(`${API}/comments/${id}` , config).then(res =>{
+            
+             setComments(res.data) 
+    
+        }).catch(res=>{
+            console.log(res)
+        }) 
+    
+      
+    
         setCommentOpen(!commentOpen)
     }
     
     return (
-        <Container onClick={handleClick}>
+        <Container onClick={HandleClick}>
             <IoChatbubbleEllipsesOutline />
             <p>{nComments} </p>
         </Container>

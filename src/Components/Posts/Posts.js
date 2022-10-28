@@ -24,6 +24,7 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
   const [editPost, setEditPost] = useState(false);
   const [text, setText] = useState(dataPost.postText);
   const [commentOpen, setCommentOpen] = useState(false);
+  const [comments, setComments] = useState({})
 
   useEffect(() => {
     getLikes(dataPost.postId, user.token)
@@ -32,8 +33,6 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
 
   }, [])
 
-  console.log(user)
-  console.log(commentOpen);
 
   return (
     <Container>
@@ -52,7 +51,7 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
         </div>
 
         <div className="likeComment">
-        <CommentsButton postId={dataPost.postId} commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
+        <CommentsButton setComments={setComments} postId={dataPost.postId} commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
           <LikesButton postId={dataPost.postId} userLike={likes.userLike} likes={likes} token={user.token} />
           
         </div>
@@ -82,11 +81,11 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
 
       </div>
       {commentOpen? <CaixaComent>
-          <Comments/>
+          <Comments comments= {comments} postId={dataPost.postId}/>
 
           <div>
           <img src={picUrl} />
-          <CommentText text={text} postId={dataPost.postId} />
+          <CommentText commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}  postId={dataPost.postId}/>
           </div>
         
       </CaixaComent>

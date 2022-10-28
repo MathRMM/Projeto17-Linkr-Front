@@ -1,7 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 
-const comments = [
+
+const comment = [
     
     {   
         id: 2,
@@ -29,31 +30,32 @@ const comments = [
     },
 
 ]
-export default function Comments (){
+export default function Comments ({comments}){
     return(
         <Container>
-            {comments?.map(v => {
+            {comments.length>0?
+            comments.map(v => {
                     if (v) {
                         return (
                         <>
                             <div>
-                                <span><img src={v.img}/></span>
+                                <span><img src={v.picUrl}/></span>
                                 <div>
                                     <div>
-                                        <h2>{v.name}</h2>
+                                        <h2>{v.username}</h2>
                                         {
-                                            v.AutorPost? <h3>• post’s author</h3> :
+                                            v.isPostAuthor? <h3>• post’s author</h3> :
                                             v.following? <h3>• following</h3> :<></>
                                         }
                                         </div>
-                                    <p>{v.text}</p>
+                                    <p>{v.commentary}</p>
                                 </div>
                             </div>
                             <hr></hr>
                         </>
                         )
                     } else return
-                })}
+                }):<></>}
         </Container>
     )
 }
