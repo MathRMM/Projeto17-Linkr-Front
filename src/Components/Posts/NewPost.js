@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import { upPost } from "../../Services/Posts/post";
+import Trending from "../Trending/Trending";
+import styled from "styled-components";
 
 export default function NewPost({ user, reload, setReload }) {
   const [loading, setLoading] = useState("Publish");
@@ -24,29 +26,41 @@ export default function NewPost({ user, reload, setReload }) {
   }
 
   return (
-    <div className="publish">
-      <img src={user.image} alt="Imagem do usuario" />
-      <div className="inputs">
-        <form>
-          <p>What are you going to share today?</p>
-          <input
-            placeholder="http://..."
-            type="text"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-          <div>
-            <input
-              className="text"
-              type="text"
-              placeholder="Awesome article about #javascript"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+    <Container>
+      <div className="teste">
+        <div className="publish">
+          <img src={user.image} alt="Imagem do usuario" />
+          <div className="inputs">
+            <form>
+              <p>What are you going to share today?</p>
+              <input
+                placeholder="http://..."
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+              />
+              <div>
+                <input
+                  className="text"
+                  type="text"
+                  placeholder="Awesome article about #javascript"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </div>
+              <button onClick={handleForm}>{loading}</button>
+            </form>
           </div>
-          <button onClick={handleForm}>{loading}</button>
-        </form>
+        </div>
+        <Trending />
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  .teste {
+    display: flex;
+    gap: 2.5rem;
+  }
+`;

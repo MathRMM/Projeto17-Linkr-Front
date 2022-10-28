@@ -8,6 +8,8 @@ import Context from "../../Context";
 import LikesButton from "./LikesButton";
 import { getLikes } from "../../Services/Posts/likes";
 import { Container } from "./Posts.styles";
+import Trending from "../Trending/Trending";
+import { ReactTagify } from "react-tagify";
 
 export default function Posts({ dataPost, picUrl, username, userId }) {
   const navigate = useNavigate();
@@ -16,13 +18,17 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
   const [editPost, setEditPost] = useState(false);
   const [text, setText] = useState(dataPost.postText);
 
+  const tagStyle = {
+    color: "white",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
+
   useEffect(() => {
     getLikes(dataPost.postId, user.token)
       .then((e) => setLikes(e.data))
       .catch((e) => "");
   }, []);
-
-  console.log(user);
 
   return (
     <Container>
@@ -34,10 +40,19 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
             {editPost ? (
               <TextEdit text={text} postId={dataPost.postId} />
             ) : (
-              <p>{dataPost.postText}</p>
+              <p>
+                <ReactTagify
+                  tagStyle={tagStyle}
+                  tagClicked={(hashtag) =>
+                    navigate(`/hashtag/${hashtag.replace("#", "")}`)
+                  }
+                >
+                  {dataPost.postText}
+                </ReactTagify>
+              </p>
             )}
           </div>
-          {user.id === userId ? (
+          {Number(user.id) === Number(userId) ? (
             <div className="editDelete">
               <EditPost editPost={editPost} setEditPost={setEditPost} />
               <DeletePost postId={dataPost.postId} />
@@ -62,7 +77,7 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
             window.open(dataPost.postLink, "_blank");
           }}
         >
-          {dataPost.metaTitle ? (
+          {dataPost.metaTitle && dataPost.metaImage ? (
             <>
               <div className="postContext">
                 <h1 className="title">{dataPost.metaTitle}</h1>

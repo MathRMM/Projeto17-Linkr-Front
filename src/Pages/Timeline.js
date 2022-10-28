@@ -3,12 +3,12 @@ import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroller";
 
 import Context from "../Context";
-import Topo from "../Components/Header/Topo";
 import Posts from "../Components/Posts/Posts";
 import Main from "../Components/Main/Main";
 import NewPost from "../Components/Posts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
 import Loading from "../Components/Posts/helpers/Loading";
+import CountPosts from "../Components/Posts/helpers/CountPosts";
 
 export default function Timeline() {
   const [user] = useContext(Context);
@@ -44,6 +44,8 @@ export default function Timeline() {
     setReload(!reload);
   }
 
+  console.log(posts);
+
   return (
     <InfiniteScroll
       pageStart={1}
@@ -58,6 +60,15 @@ export default function Timeline() {
           <h2>timeline</h2>
 
           <NewPost user={user} reload={reload} setReload={setReload} />
+          <CountPosts
+            user={user}
+            reload={reload}
+            setReload={setReload}
+            page={page}
+            setPage={setPage}
+            posts={posts}
+            setPosts={setPosts}
+          />
 
           {posts?.map((e) => (
             <Posts
@@ -74,192 +85,3 @@ export default function Timeline() {
     </InfiniteScroll>
   );
 }
-
-const Container = styled.div`
-  .screen {
-    width: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 2.5rem;
-  }
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-right: 2.5rem;
-  h2 {
-    margin-top: 15rem;
-    margin-bottom: 4.3rem;
-
-    display: flex;
-    align-items: initial;
-
-    font-family: "Oswald";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 4.3rem;
-
-    color: #ffffff;
-  }
-
-  .publish {
-    display: flex;
-    padding-top: 1.6rem;
-    padding-left: 1.8rem;
-
-    box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    border-radius: 1.6rem;
-
-    width: 61.1rem;
-    height: 20.9rem;
-
-    margin-bottom: 2.9rem;
-
-    background-color: #ffffff;
-
-    img {
-      width: 5.3rem;
-      height: 5.3rem;
-
-      border-radius: 2.65rem;
-
-      margin-right: 1.7rem;
-    }
-
-    .inputs {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      gap: 0.5rem;
-
-      input {
-        width: 50.3rem;
-        height: 3rem;
-
-        padding: 1rem;
-
-        border: none;
-        background: #efefef;
-        border-radius: 0.5rem;
-
-        outline: none;
-      }
-
-      input::placeholder {
-        padding-left: 0.1rem;
-      }
-
-      div {
-        margin: 0.5rem 0rem;
-
-        width: 50.2rem;
-        height: 6.6rem;
-
-        background: #efefef;
-        border-radius: 0.5rem;
-      }
-
-      p {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 300;
-        font-size: 2rem;
-        line-height: 2.4rem;
-
-        margin-bottom: 1rem;
-
-        color: #707070;
-      }
-
-      .text {
-        width: 50.2rem;
-        word-wrap: break-word;
-      }
-
-      button {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 700;
-        font-size: 1.4rem;
-
-        cursor: pointer;
-
-        margin-left: 39rem;
-
-        border: none;
-
-        color: #ffffff;
-
-        width: 11.2rem;
-        height: 3.1rem;
-
-        background: #1877f2;
-        border-radius: 0.5rem;
-      }
-    }
-  }
-
-  .NoPosts {
-    font-family: "Lato";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 2rem;
-
-    margin-left: 30%;
-  }
-
-  @media (max-width: 600px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-
-    .publish {
-      margin-left: 8.6rem;
-
-      width: 100%;
-
-      border-radius: 0rem;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        display: none;
-      }
-
-      form {
-        p {
-          font-family: "Lato";
-          font-style: normal;
-          font-weight: 300;
-          font-size: 17px;
-          line-height: 20px;
-        }
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-    }
-
-    .global {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      flex-direction: column;
-
-      h2 {
-        margin-left: 12rem;
-      }
-    }
-  }
-`;

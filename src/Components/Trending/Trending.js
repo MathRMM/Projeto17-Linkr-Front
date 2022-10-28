@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import tag from "../../Services/Tag/tag";
+import Context from "../../Context";
 
 export default function Trending() {
   const [trends, setTrends] = useState([]);
+  const [user] = useContext(Context);
 
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5000/ranking");
-    promisse.then((res) => {
+    tag(user.token).then((res) => {
       setTrends(res.data);
     });
   }, []);

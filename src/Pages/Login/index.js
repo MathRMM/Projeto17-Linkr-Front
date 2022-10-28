@@ -39,6 +39,7 @@ export function Login() { // TODO - criar uma rota q verifica se o usu√°rio est√
                 image: res.data.image,
                 token: res.data.token,
             }))
+            localStorage.setItem('id', res.data.id);
             localStorage.setItem('username', res.data.username);
             localStorage.setItem('image', res.data.image);
             localStorage.setItem('token', res.data.token);
