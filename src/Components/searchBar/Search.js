@@ -73,7 +73,7 @@ const Search = styled.div`
     font-family: 'Lato';
     .input{
         position: relative;
-        width: 40rem ;
+        width: 50vw ;
         height: 3rem;
         font-size: 20px;
         padding-left: 10px;
@@ -111,7 +111,12 @@ const Search = styled.div`
         padding: 20px 0 10px 10px;
     }
 
-    @media (max-width: 800px){
-        display: none;
+    @media (max-width: 500px){
+        position: absolute;
+        margin-left: 10%;
+        bottom: -50px;
+        .input{
+            width: 80vw;
+        }
     }
 `;

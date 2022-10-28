@@ -13,9 +13,7 @@ export default function CountPosts(props) {
         updatePost(props.user.token)
             .then(e => setCount(Number(e.data.count)))
     }
-    , [])
-
-    console.log(props)
+    , [props.posts])
 
     useInterval(()=>{
         updatePost(props.user.token)

@@ -2,21 +2,23 @@ import { useState } from "react";
 
 import { upPost } from "../../Services/Posts/post";
 
-export default function NewPost({ user, reload, setReload}) {
-    const [loading, setLoading] = useState("Publish");
+export default function NewPost({ user, reload, setReload, setPage, setPosts}) {
+    const [loading, setLoading] = useState(false);
     const [link, setLink] = useState('');
     const [text, setText] = useState('');
 
     function handleForm(e){
         e.preventDefault()
-        setLoading("Loading...")
+        setLoading(true)
         console.log('aa')
         upPost({
             url: link,
             comment: text
         }, user.token).then(e => {
+            setPage(1)
+            setPosts([])
             setReload(!reload)
-            setLoading("Publish")
+            setLoading(false)
         })
     }
     
@@ -41,7 +43,12 @@ export default function NewPost({ user, reload, setReload}) {
                             onChange = {(e) => setText(e.target.value)}
                         />
                     </div>
-                    <button onClick={handleForm}>{loading}</button>
+                    {loading ? (
+                        <button>Loading ...</button>
+                    ):(
+                        <button onClick={handleForm}>Publish</button>
+                    )}
+                    
                 </form>
             </div>
         </div>
