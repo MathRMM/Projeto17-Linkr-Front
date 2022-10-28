@@ -55,6 +55,8 @@ export default function Timeline() {
       })
   })
 
+  console.log(page)
+
   function loadMore(e) {
     setPage(e)
     setHasMore(false)
