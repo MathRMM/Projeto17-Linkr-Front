@@ -27,7 +27,7 @@ export default function PostTag() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [hashtag]);
 
   console.log(posts);
 
