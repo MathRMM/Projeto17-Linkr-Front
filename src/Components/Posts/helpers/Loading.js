@@ -18,7 +18,7 @@ const LoadingStyle = styled.div`
     line-height: 26px;
     letter-spacing: 0.05em;
     color: #6D6D6D;
-    width: 80%;
+    width: 100%;
     text-align: center;
     margin-bottom: 200px;
     display: flex;

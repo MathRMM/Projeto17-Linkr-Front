@@ -9,6 +9,7 @@ import UsersPage from "../Pages/UsersPage";
 
 
 const userObj = {
+  id: localStorage.getItem('id') ?? '',
   username: localStorage.getItem('username') ?? '',
   image: localStorage.getItem('image') ?? '',
   token: localStorage.getItem('token') ?? '',
