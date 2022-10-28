@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+import styled from "styled-components";
 
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
@@ -32,9 +33,11 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
   }, [])
 
   console.log(user)
+  console.log(commentOpen);
 
   return (
     <Container>
+      <CommentContainer>
       <div className="post">
         <div className="top">
           <img src={picUrl} alt='imagem usuario' />
@@ -49,7 +52,9 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
         </div>
 
         <div className="likeComment">
+        <CommentsButton postId={dataPost.postId} commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
           <LikesButton postId={dataPost.postId} userLike={likes.userLike} likes={likes} token={user.token} />
+          
         </div>
 
         <div
@@ -76,6 +81,17 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
         </div>
 
       </div>
+      {commentOpen? <CaixaComent>
+          <Comments/>
+
+          <div>
+          <img src={picUrl} />
+          <CommentText text={text} postId={dataPost.postId} />
+          </div>
+        
+      </CaixaComent>
+      : <></>}
+      </CommentContainer>
     </Container>
     
   );
@@ -119,69 +135,4 @@ const CommentContainer = styled.div`
 
     background-color: #1E1E1E;
 `
-
-const Container = styled.div`
-
-position: relative;
-  .post {
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    padding-top: 1.6rem;
-    padding-left: 1.8rem;
-
-    box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-    border-radius: 1.6rem;
-
-    width: 61.1rem;
-    height: 27.6rem;
-
-    margin-bottom: 2.9rem;
-
-    background-color: #171717;
-    z-index: 10;
-
-    .infor {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      
-
-      h3 {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1.9rem;
-        cursor: pointer;
-
-        color: #ffffff;
-      }
-
-      p {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1.7rem;
-
-        color: #b7b7b7;
-      }
-      span{
-          width: 10%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          div{
-            margin-left: 10%;
-            
-          }
-      }
-    }
-  }
-  
-`;
-
-
-
-
-
 

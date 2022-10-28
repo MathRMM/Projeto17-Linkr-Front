@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   .post {
     width: 61.1rem;
-    min-height: 15rem;
+    min-height: 19rem;
     position: relative;
     margin-bottom: 2.9rem;
     padding: 1.6rem 1.8rem 2rem 1.8rem;
