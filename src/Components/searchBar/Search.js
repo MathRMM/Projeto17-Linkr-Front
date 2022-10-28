@@ -11,7 +11,7 @@ export default function SearchBar() {
     const [users, setUsers] = useState([])
     const [autoComplete, setAutoComplete] = useState(false)
     const navigate = useNavigate()
-    const [user] =useContext(Context)
+    const [user] = useContext(Context)
 
     useEffect(() => {
         if (value !== '') {
@@ -33,7 +33,7 @@ export default function SearchBar() {
         if (e.target.tagName !== 'H2' && e.target.className !== 'user') {
             setAutoComplete(false)
         }
-        if (e.target.tagName==='INPUT' && value.length >= 3){
+        if (e.target.tagName === 'INPUT' && value.length >= 3) {
             setAutoComplete(true)
         }
     })
@@ -41,8 +41,8 @@ export default function SearchBar() {
     function RenderUsersAutocomplete({ user }) {
         return (
             <h2 className='user' onClick={() => navigate(`/user/${user.id}`)}>
-                <img src={user.picUrl} alt='imagem do usuario'/>
-                 {user?.username}
+                <img src={user.picUrl} alt='imagem do usuario' />
+                {user?.username}
             </h2>
         )
     }
@@ -109,5 +109,9 @@ const Search = styled.div`
 
     .autoComplete h2:first-child{
         padding: 20px 0 10px 10px;
+    }
+
+    @media (max-width: 800px){
+        display: none;
     }
 `;

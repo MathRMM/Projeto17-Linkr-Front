@@ -32,7 +32,9 @@ export function Login() { // TODO - criar uma rota q verifica se o usuÃ¡rio estÃ
         }
 
         postLogin(body).then(res => {
+            console.log(res.data)
             setUser(current => ({
+                id : res.data.id,
                 username: res.data.username,
                 image: res.data.image,
                 token: res.data.token,
@@ -44,6 +46,7 @@ export function Login() { // TODO - criar uma rota q verifica se o usuÃ¡rio estÃ
             navigate('/timeline');
             return;
         }).catch(e => {
+            console.log(e)
             if ("message" in e.response.data) {
                 alert(e.response.data.message);
             } else if (e.code === 'ERR_BAD_REQUEST' && "0" in e.response.data) {

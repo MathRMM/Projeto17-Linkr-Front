@@ -1,17 +1,39 @@
-import styled  from 'styled-components';
+import styled from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroller';
+import { useState, useEffect } from 'react';
 
-export default function Main({children}){
-    return(
-        <MainComponent>
-            {children}
-        </MainComponent>
-    )
+import Topo from "../Header/Topo"
+
+export default function Main({ children }) {
+  const [posts, setPosts] = useState([])
+  const [reloadRender, setReloadRender] = useState(false)
+
+
+  useEffect(() => {
+    setPosts(posts)
+  }, [reloadRender])
+
+  return (
+    <>
+      <Topo />
+      <MainComponent
+        posts={posts}
+        setPosts={setPosts}
+        reloadRender={reloadRender}
+        setReloadRender={setReloadRender}
+      >
+        {children}
+      </MainComponent>
+    </>
+  )
 }
 
 const MainComponent = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
+  margin-bottom: 100px;
 
   width: 80%;
   h2 {
@@ -104,8 +126,6 @@ const MainComponent = styled.div`
 
         margin-left: 39rem;
 
-        border: none;
-
         color: #ffffff;
 
         width: 11.2rem;
@@ -113,6 +133,8 @@ const MainComponent = styled.div`
 
         background: #1877f2;
         border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
       }
     }
   }
