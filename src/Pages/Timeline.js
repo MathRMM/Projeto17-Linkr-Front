@@ -1,219 +1,77 @@
-<<<<<<< HEAD
-import { useState, useContext, useEffect } from "react";
-import styled from "styled-components";
-import Topo from "../Components/Header/Topo";
-import NewPosts from "../Components/Posts/NewPost";
-import axios from "axios";
-import Context from "../Context";
-import { Report } from "notiflix/build/notiflix-report-aio";
-import Trending from "../Components/Trending/Trending";
-
-export default function Timeline() {
-  const [loading, setLoading] = useState("Publish");
-  const [block, setBlock] = useState(false);
-  const [blockButton, setBlockButton] = useState(false);
-  const [form, setForm] = useState({
-    url: "",
-    comment: "",
-  });
-  const [user, setUser] = useContext(Context);
-  const [posts, setPosts] = useState([]);
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  };
-
-  setInterval(
-    useEffect(() => {
-      axios
-        .get("http://localhost:5000/timeline", config)
-        .then((res) => {
-          setPosts(res.data.rows);
-        })
-        .catch((err) => {
-          console.log(err);
-          Report.failure(
-            "No Posts",
-            "An error occured while trying to fetch the posts, please refresh the page",
-            "ok"
-          );
-        });
-    }, [])
-  );
-
-  function handleForm(event) {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value,
-    });
-  }
-
-  if (posts.length < 0) {
-    Report.failure("No Posts", "There are no posts yet", "ok");
-  }
-
-  function publish() {
-    if (form.url === "") {
-      Report.failure("Error", "No Link", "ok");
-      return;
-    } else {
-      const body = { ...form };
-
-      setLoading("Publishing...");
-
-      axios
-        .post("http://localhost:5000/timeline", body, config)
-        .then((res) => {
-          setBlock(true);
-          setBlockButton(true);
-
-          setBlock(false);
-          setBlockButton(false);
-          setLoading("Publish");
-          window.location.reload();
-        })
-        .catch((err) => {
-          setBlock(true);
-          setBlockButton(true);
-          Report.failure("Error", "Houve um erro ao publicar seu link", "ok");
-
-          setBlock(false);
-          setBlockButton(false);
-          setLoading("Publish");
-          console.log(err);
-        });
-    }
-  }
-
-  return (
-    <>
-      <Topo />
-      <Container>
-        <div className="global">
-          <h2>timeline</h2>
-
-          <div className="screen">
-            <div className="publish">
-              <img src={user.image} />
-              <div className="inputs">
-                <form>
-                  <p>What are you going to share today?</p>
-                  <input
-                    placeholder="http://..."
-                    type="text"
-                    name="url"
-                    onChange={handleForm}
-                    value={form.url}
-                    disabled={block}
-                    required
-                  />
-                  <div>
-                    <input
-                      className="text"
-                      type="text"
-                      placeholder="Awesome article about #javascript"
-                      name="comment"
-                      onChange={handleForm}
-                      value={form.comment}
-                      disabled={block}
-                    />
-                  </div>
-
-                  <button disabled={blockButton} onClick={publish}>
-                    {loading}
-                  </button>
-                </form>
-              </div>
-            </div>
-            <Trending />
-          </div>
-
-          {posts.length > 0 ? (
-            <NewPosts posts={posts} />
-          ) : (
-            <p className="NoPosts">There are no posts yet</p>
-          )}
-        </div>
-      </Container>
-    </>
-=======
 import { useState, useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from "react-infinite-scroller";
 
 import Context from "../Context";
 import Topo from "../Components/Header/Topo";
 import Posts from "../Components/Posts/Posts";
-import Main from '../Components/Main/Main';
+import Main from "../Components/Main/Main";
 import NewPost from "../Components/Posts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
-import Loading from '../Components/Posts/helpers/Loading';
-
+import Loading from "../Components/Posts/helpers/Loading";
 
 export default function Timeline() {
-  const [user] = useContext(Context)
-  const [posts, setPosts] = useState([])
-  const [reload, setReload] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [page, setPage] = useState(1)
-  const [reloadRender, setReloadRender] = useState(false)
+  const [user] = useContext(Context);
+  const [posts, setPosts] = useState([]);
+  const [reload, setReload] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const [reloadRender, setReloadRender] = useState(false);
 
   useEffect(() => {
-    getPostsApi(page, user.token)
-      .then(e => {
-        if (!posts[0]) {
-          setPosts(e.data)
-          setHasMore(true)
-        }
-        if (e.data[0]) {
-          posts.push(...e.data)
-          setReloadRender(!reloadRender)
-          setHasMore(true)
-        } else {
-          setHasMore(false)
-        }
-      })
-  }, [reload])
+    getPostsApi(page, user.token).then((e) => {
+      if (!posts[0]) {
+        setPosts(e.data);
+        setHasMore(true);
+      }
+      if (e.data[0]) {
+        posts.push(...e.data);
+        setReloadRender(!reloadRender);
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
+    });
+  }, [reload]);
 
   useEffect(() => {
-    setPosts(posts)
-  }, [reloadRender])
+    setPosts(posts);
+  }, [reloadRender]);
 
   function loadMore(e) {
-    setPage(e)
-    setHasMore(false)
-    setReload(!reload)
+    setPage(e);
+    setHasMore(false);
+    setReload(!reload);
   }
 
   return (
-<InfiniteScroll
-          pageStart={1}
-          loadMore={loadMore}
-          useWindow={true}
-          initialLoad={false}
-          hasMore={hasMore}
-          threshold={-50}
-        >
-    <Main>
-      <div >
-        <h2>timeline</h2>
+    <InfiniteScroll
+      pageStart={1}
+      loadMore={loadMore}
+      useWindow={true}
+      initialLoad={false}
+      hasMore={hasMore}
+      threshold={-50}
+    >
+      <Main>
+        <div>
+          <h2>timeline</h2>
 
-        <NewPost user={user} reload={reload} setReload={setReload} />
-        
-          {posts?.map(e => <Posts
-            dataPost={e}
-            picUrl={e.picUrl}
-            username={e.username}
-            userId={e.userId}
-            key={e.postId}
-          />)}
-        {hasMore? <Loading /> : ''}
-      </div>
-    </Main>
-</InfiniteScroll>
->>>>>>> main
+          <NewPost user={user} reload={reload} setReload={setReload} />
+
+          {posts?.map((e) => (
+            <Posts
+              dataPost={e}
+              picUrl={e.picUrl}
+              username={e.username}
+              userId={e.userId}
+              key={e.postId}
+            />
+          ))}
+          {hasMore ? <Loading /> : ""}
+        </div>
+      </Main>
+    </InfiniteScroll>
   );
 }
 

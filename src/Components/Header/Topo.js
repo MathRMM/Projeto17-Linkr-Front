@@ -30,7 +30,7 @@ export default function Topo() {
           <DropDown />
         </LogoutMenu>
 
-        <img src={user.image} onClick={() => (setOpen(current => !current))} />
+        <img src={user.image} onClick={() => setOpen((current) => !current)} />
       </UserViewer>
     </Header>
   );
@@ -59,8 +59,6 @@ function DropDown() {
 
   function handleLogout() {
     if (loading) return;
-<<<<<<< HEAD
-
     setLoading((current) => true);
     getLogOut(user.token)
       .then((res) => {
@@ -73,28 +71,11 @@ function DropDown() {
       })
       .catch((e) => {
         localStorage.removeItem("token");
+        setUser((current) => {});
         navigate("/");
         window.location.reload();
-        //console.log(e)
+        console.log(e);
       });
-=======
-    setLoading(current => true);
-    getLogOut(user.token).then(res => {
-      localStorage.removeItem('token');
-      setUser(current => { });
-      setLoading(current => false);
-      navigate('/');
-      window.location.reload();
-      return;
-    }).catch(e => {
-      localStorage.removeItem('token');
-      setUser(current => { });
-      navigate('/');
-      window.location.reload();
-      console.log(e)
-    });
-
->>>>>>> main
   }
 
   return (
@@ -123,12 +104,8 @@ const UserViewer = styled.header`
     height: 5.3rem;
     border-radius: 2.65rem;
     margin-right: 1.7rem;
-<<<<<<< HEAD
-  }
-=======
     cursor: pointer;
-  } 
->>>>>>> main
+  }
 
   .drop-down {
     position: absolute;
