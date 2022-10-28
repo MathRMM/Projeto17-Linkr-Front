@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import TextEdit from "./TextEdit";
@@ -13,50 +13,69 @@ import Comments from "./Comments";
 import Context from "../../Context";
 import LikesButton from "./LikesButton";
 import { getLikes } from "../../Services/Posts/likes";
+import { Container } from "./Posts.styles";
 
 
-export default function Posts({ username, picUrl, postLink, postText, userId, postId }) {
-  const navigate = useNavigate()
-  const [likes, setLikes] = useState({})
-  const [user] = useContext(Context)
-  const [editPost, setEditPost] = useState(false)
-  const [text, setText] = useState(postText)
+export default function Posts({ dataPost, picUrl, username, userId }) {
+  const navigate = useNavigate();
+  const [likes, setLikes] = useState({});
+  const [user] = useContext(Context);
+  const [editPost, setEditPost] = useState(false);
+  const [text, setText] = useState(dataPost.postText);
   const [commentOpen, setCommentOpen] = useState(false);
 
-
   useEffect(() => {
-    getLikes(postId, user.token)
+    getLikes(dataPost.postId, user.token)
       .then(e => setLikes(e.data))
       .catch(e => '')
+
   }, [])
-  console.log(commentOpen);
+
+  console.log(user)
 
   return (
     <Container>
-      <CommentContainer>
-        <div className="post">
+      <div className="post">
+        <div className="top">
           <img src={picUrl} alt='imagem usuario' />
-          <LikesButton postId={postId} userLike={likes.userLike} likes={likes} token={user.token} />
-        <CommentsButton commentOpen = {commentOpen} setCommentOpen = {setCommentOpen}/>
           <div className="infor">
             <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
-            {editPost ? <TextEdit text={text} postId={postId} /> : <p>{postText}</p>}
+            {editPost ? <TextEdit text={text} postId={dataPost.postId} /> : <p>{dataPost.postText}</p>}
           </div>
-          <EditPost editPost={editPost} setEditPost={setEditPost} />
-          <DeletePost postId={postId} />
+          {user.id === userId ? <div className="editDelete">
+            <EditPost editPost={editPost} setEditPost={setEditPost} />
+            <DeletePost postId={dataPost.postId} />
+          </div> : ''}
         </div>
-        {commentOpen? <CaixaComent>
-          <Comments/>
 
-          <div>
-          <img src={picUrl} />
-          <CommentText text={text} postId={postId} />
-          </div>
-        
-      </CaixaComent>
-      : <></>}
-        
-      </CommentContainer>
+        <div className="likeComment">
+          <LikesButton postId={dataPost.postId} userLike={likes.userLike} likes={likes} token={user.token} />
+        </div>
+
+        <div
+          className="dataLink"
+          onClick={() => {
+            window.open(dataPost.postLink, '_blank');
+          }}
+        >
+          {
+            dataPost.metaTitle ?
+              (<>
+                <div className="postContext">
+                  <h1 className="title">{dataPost.metaTitle}</h1>
+                  <h4 className="description">{dataPost.metaDescription}</h4>
+                  <p className="link">{dataPost.postLink}</p>
+                </div>
+                <div className="postImg">
+                  <img src={dataPost.metaImage} alt="" />
+                </div>
+              </>) : (
+                <div className="onlyLink">{dataPost.postLink}</div>
+              )
+          }
+        </div>
+
+      </div>
     </Container>
     
   );

@@ -1,54 +1,76 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
+import InfiniteScroll from 'react-infinite-scroller';
+
 import Context from "../Context";
 import Topo from "../Components/Header/Topo";
 import Posts from "../Components/Posts/Posts";
-import Main from '../Components/Main/Main'
+import Main from '../Components/Main/Main';
+import NewPost from "../Components/Posts/NewPost";
+import { getPostsApi } from "../Services/Posts/post";
+import Loading from '../Components/Posts/helpers/Loading';
+
 
 export default function Timeline() {
-  const [loading, setLoading] = useState("Publish");
+  const [user] = useContext(Context)
+  const [posts, setPosts] = useState([])
+  const [reload, setReload] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const [reloadRender, setReloadRender] = useState(false)
+
+  useEffect(() => {
+    getPostsApi(page, user.token)
+      .then(e => {
+        if (!posts[0]) {
+          setPosts(e.data)
+          setHasMore(true)
+        }
+        if (e.data[0]) {
+          posts.push(...e.data)
+          setReloadRender(!reloadRender)
+          setHasMore(true)
+        } else {
+          setHasMore(false)
+        }
+      })
+  }, [reload])
+
+  useEffect(() => {
+    setPosts(posts)
+  }, [reloadRender])
+
+  function loadMore(e) {
+    setPage(e)
+    setHasMore(false)
+    setReload(!reload)
+  }
 
   return (
-    <>
-      <Topo />
-      <Main>
-        <div>
-          <h2>timeline</h2>
+<InfiniteScroll
+          pageStart={1}
+          loadMore={loadMore}
+          useWindow={true}
+          initialLoad={false}
+          hasMore={hasMore}
+          threshold={-50}
+        >
+    <Main>
+      <div >
+        <h2>timeline</h2>
 
-          <div className="publish">
-            <img src="https://www.rbsdirect.com.br/imagesrc/25287616.jpg?w=1024&h=768&a=c" />
-            <div className="inputs">
-              <form>
-                <p>What are you going to share today?</p>
-                <input placeholder="http://..." type="text" />
-                <div>
-                  <input
-                    className="text"
-                    type="text"
-                    placeholder="Awesome article about #javascript"
-                  />
-                </div>
-
-                <button>{loading}</button>
-              </form>
-            </div>
-          </div>
-
-          <Posts />
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-          <p>Teste</p>
-        </div>
-      </Main>
-    </>
+        <NewPost user={user} reload={reload} setReload={setReload} />
+        
+          {posts?.map(e => <Posts
+            dataPost={e}
+            picUrl={e.picUrl}
+            username={e.username}
+            userId={e.userId}
+            key={e.postId}
+          />)}
+        {hasMore? <Loading /> : ''}
+      </div>
+    </Main>
+</InfiniteScroll>
   );
 }
