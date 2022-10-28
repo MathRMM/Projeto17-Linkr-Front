@@ -59,18 +59,24 @@ export default function Timeline() {
       <div >
         <h2>timeline</h2>
 
-        <NewPost user={user} reload={reload} setReload={setReload} />
+        <NewPost 
+        user={user} 
+        reload={reload} 
+        setReload={setReload}
+        setPage={setPage}
+        setPosts = {setPosts} 
+        />
+
         <CountPosts 
           user={user} 
           reload={reload} 
           setReload={setReload} 
-          page={page} 
           setPage={setPage}
-          posts ={posts} 
+          posts={posts}
           setPosts = {setPosts} 
         />
 
-        {posts?.map(e => <Posts
+        {posts.map(e => <Posts
           dataPost={e}
           picUrl={e.picUrl}
           username={e.username}
