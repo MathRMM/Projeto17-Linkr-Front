@@ -41,8 +41,11 @@ export default function SearchBar() {
     function RenderUsersAutocomplete({ user }) {
         return (
             <h2 className='user' onClick={() => navigate(`/user/${user.id}`)}>
+
                 <img src={user.picUrl} alt='imagem do usuario' />
                 {user?.username}
+
+                {user?.followedByUser === 'true' ? <span><BulletPoint /> following</span> : <span></span>}
             </h2>
         )
     }
@@ -67,6 +70,16 @@ export default function SearchBar() {
         </Search>
     )
 }
+
+const BulletPoint = styled.div`
+    background-color: black;
+    opacity: 0.5;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.7rem;
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+`
 
 const Search = styled.div`
     position: relative;
@@ -109,6 +122,13 @@ const Search = styled.div`
 
     .autoComplete h2:first-child{
         padding: 20px 0 10px 10px;
+    }
+    
+    .autoComplete span{
+        display: flex;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.5);
+        margin-left: 1rem;
     }
 
     @media (max-width: 500px){

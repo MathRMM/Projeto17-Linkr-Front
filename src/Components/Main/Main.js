@@ -42,7 +42,8 @@ const MainComponent = styled.div`
     margin-bottom: 4.3rem;
 
     display: flex;
-    align-items: initial;
+    justify-content: space-between;
+    align-items: center;
 
     font-family: "Oswald";
     font-style: normal;
@@ -50,6 +51,15 @@ const MainComponent = styled.div`
     font-size: 4.3rem;
 
     color: #ffffff;
+  }
+
+  h2 span {
+    display: flex;
+    align-items: center;
+  }
+
+  h2 span img {
+    margin-left: 1.7rem;
   }
 
   .publish {
