@@ -8,7 +8,6 @@ import Context from "../../Context";
 import LikesButton from "./LikesButton";
 import { getLikes } from "../../Services/Posts/likes";
 import { Container } from "./Posts.styles";
-import Trending from "../Trending/Trending";
 import { ReactTagify } from "react-tagify";
 
 export default function Posts({ dataPost, picUrl, username, userId }) {
@@ -26,9 +25,9 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
 
   useEffect(() => {
     getLikes(dataPost.postId, user.token)
-      .then((e) => setLikes(e.data))
-      .catch((e) => "");
-  }, []);
+      .then(e => setLikes(e.data))
+      .catch(e => '')
+  }, [])
 
   return (
     <Container>
@@ -52,14 +51,10 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
               </p>
             )}
           </div>
-          {Number(user.id) === Number(userId) ? (
-            <div className="editDelete">
-              <EditPost editPost={editPost} setEditPost={setEditPost} />
-              <DeletePost postId={dataPost.postId} />
-            </div>
-          ) : (
-            ""
-          )}
+          {Number(user.id) === Number(userId) ? <div className="editDelete">
+            <EditPost editPost={editPost} setEditPost={setEditPost} />
+            <DeletePost postId={dataPost.postId} />
+          </div> : ''}
         </div>
 
         <div className="likeComment">
@@ -77,20 +72,21 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
             window.open(dataPost.postLink, "_blank");
           }}
         >
-          {dataPost.metaTitle && dataPost.metaImage ? (
-            <>
-              <div className="postContext">
-                <h1 className="title">{dataPost.metaTitle}</h1>
-                <h4 className="description">{dataPost.metaDescription}</h4>
-                <p className="link">{dataPost.postLink}</p>
-              </div>
-              <div className="postImg">
-                <img src={dataPost.metaImage} alt="" />
-              </div>
-            </>
-          ) : (
-            <div className="onlyLink">{dataPost.postLink}</div>
-          )}
+          {
+            dataPost.metaTitle && dataPost.metaImage ?
+              (<>
+                <div className="postContext">
+                  <h1 className="title">{dataPost.metaTitle}</h1>
+                  <h4 className="description">{dataPost.metaDescription}</h4>
+                  <p className="link">{dataPost.postLink}</p>
+                </div>
+                <div className="postImg">
+                  <img src={dataPost.metaImage} alt="" />
+                </div>
+              </>) : (
+                <div className="onlyLink">{dataPost.postLink}</div>
+              )
+          }
         </div>
       </div>
     </Container>

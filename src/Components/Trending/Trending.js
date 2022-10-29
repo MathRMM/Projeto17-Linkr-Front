@@ -36,14 +36,16 @@ export default function Trending() {
 
 const Container = styled.main`
   padding-bottom: 1rem;
-
-  height: 100%;
-
+  height: max-content;
   width: 30.1rem;
   color: #ffffff;
   font-family: "Lato", sans-serif;
   background-color: #171717;
   border-radius: 1.6rem;
+
+  position: absolute;
+  right: 8%;
+  top: 25rem;
 
   h1 {
     font-family: "Oswald";
@@ -68,5 +70,16 @@ const Container = styled.main`
   li {
     padding-bottom: 0.8rem;
     cursor: pointer;
+  }
+
+  @media (max-width:1700px) {
+    right: -8%;
+  }
+
+  @media (max-width:1300px) {
+    right: -15%;
+  }
+  @media (max-width:1300px) {
+    display: none;
   }
 `;

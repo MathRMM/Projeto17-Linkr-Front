@@ -9,11 +9,11 @@ import UsersPage from "../Pages/UsersPage";
 import PostTag from "../Components/Posts/PostTag";
 
 const userObj = {
-  id: localStorage.getItem("id") ?? "",
-  username: localStorage.getItem("username") ?? "",
-  image: localStorage.getItem("image") ?? "",
-  token: localStorage.getItem("token") ?? "",
-};
+  id: localStorage.getItem('id') ?? '',
+  username: localStorage.getItem('username') ?? '',
+  image: localStorage.getItem('image') ?? '',
+  token: localStorage.getItem('token') ?? '',
+}
 
 export default function App() {
   const [user, setUser] = useState(userObj);

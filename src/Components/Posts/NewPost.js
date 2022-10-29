@@ -1,35 +1,31 @@
 import { useState } from "react";
-
-import { upPost } from "../../Services/Posts/post";
-import Trending from "../Trending/Trending";
 import styled from "styled-components";
 
-export default function NewPost({ user, reload, setReload }) {
-  const [loading, setLoading] = useState("Publish");
-  const [link, setLink] = useState("");
-  const [text, setText] = useState("");
+import { upPost } from "../../Services/Posts/post";
+
+export default function NewPost({ user, reload, setReload, setPage, setPosts }) {
+  const [loading, setLoading] = useState(false);
+  const [link, setLink] = useState('');
+  const [text, setText] = useState('');
 
   function handleForm(e) {
-    e.preventDefault();
-    setLoading("Loading...");
-    console.log("aa");
-    upPost(
-      {
-        url: link,
-        comment: text,
-      },
-      user.token
-    ).then((e) => {
-      setReload(!reload);
-      setLoading("Publish");
-    });
+    e.preventDefault()
+    setLoading(true)
+    console.log('aa')
+    upPost({
+      url: link,
+      comment: text
+    }, user.token).then(e => {
+      setPage(1)
+      setPosts([])
+      setReload(!reload)
+      setLoading(false)
+    })
   }
 
   return (
-    <Container>
-      <div className="teste">
         <div className="publish">
-          <img src={user.image} alt="Imagem do usuario" />
+          <img src={user.image} alt='Imagem do usuario' />
           <div className="inputs">
             <form>
               <p>What are you going to share today?</p>
@@ -48,13 +44,16 @@ export default function NewPost({ user, reload, setReload }) {
                   onChange={(e) => setText(e.target.value)}
                 />
               </div>
-              <button onClick={handleForm}>{loading}</button>
+              {loading ? (
+                <button>Loading ...</button>
+              ) : (
+                <button onClick={handleForm}>Publish</button>
+              )}
+
             </form>
           </div>
         </div>
-        <Trending />
-      </div>
-    </Container>
+       
   );
 }
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import useInterval from 'use-interval'
+import useInterval from 'use-interval';
 import { TfiReload } from 'react-icons/tfi'
 import { updatePost } from "../../../Services/Posts/post";
 
@@ -9,18 +9,16 @@ export default function CountPosts(props) {
     const [count, setCount] = useState(0)
     const [renderCount, setRenderCount] = useState(0)
 
-    useEffect(()=>{
+    useEffect(() => {
         updatePost(props.user.token)
             .then(e => setCount(Number(e.data.count)))
     }
-    , [])
+        , [props.posts])
 
-    console.log(props)
-
-    useInterval(()=>{
+    useInterval(() => {
         updatePost(props.user.token)
             .then(e => {
-                if(Number(e.data.count) > count){
+                if (Number(e.data.count) > count) {
                     setCount(Number(e.data.count))
                     setRenderCount(Number(e.data.count) - count)
                     setUpdate(true)
@@ -28,7 +26,7 @@ export default function CountPosts(props) {
             })
     }, 15000)
 
-    function updateTimeline(){
+    function updateTimeline() {
         props.setPosts([])
         props.setPage(1)
         props.setReload(!props.reload)
@@ -37,7 +35,7 @@ export default function CountPosts(props) {
 
     return (
         <>
-            {update? (<Count onClick={updateTimeline}>
+            {update ? (<Count onClick={updateTimeline}>
                 <h2>
                     {renderCount + ' new posts, load more!'}
                 </h2>
