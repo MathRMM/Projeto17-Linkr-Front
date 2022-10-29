@@ -1,15 +1,16 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from "react-infinite-scroller";
 
 import Context from "../Context";
 import Posts from "../Components/Posts/Posts";
-import Main from '../Components/Main/Main';
+import Main from "../Components/Main/Main";
 import NewPost from "../Components/Posts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
 import { getAllFollowing } from "../Services/Following/follow";
 import Loading from '../Components/Posts/helpers/Loading';
 import CountPosts from "../Components/Posts/helpers/CountPosts";
+import Trending from '../Components/Trending/Trending';
 
 
 export default function Timeline() {
@@ -21,26 +22,26 @@ export default function Timeline() {
   const [reloadRender, setReloadRender] = useState(false)
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    getPostsApi(page, user.token)
-      .then(e => {
-        if (!posts[0]) {
-          setPosts(e.data)
-          setHasMore(true)
-        }
-        if (e.data[0]) {
-          posts.push(...e.data)
-          setReloadRender(!reloadRender)
-          setHasMore(true)
-        } else {
-          setHasMore(false)
-        }
-      })
-  }, [reload])
 
   useEffect(() => {
-    setPosts(posts)
-  }, [reloadRender])
+    getPostsApi(page, user.token).then((e) => {
+      if (!posts[0]) {
+        setPosts(e.data);
+        setHasMore(true);
+      }
+      if (e.data[0]) {
+        posts.push(...e.data);
+        setReloadRender(!reloadRender);
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
+    });
+  }, [reload]);
+
+  useEffect(() => {
+    setPosts(posts);
+  }, [reloadRender]);
 
   useEffect(() => {
     getAllFollowing(user.token)
@@ -56,9 +57,9 @@ export default function Timeline() {
   })
 
   function loadMore(e) {
-    setPage(e)
-    setHasMore(false)
-    setReload(!reload)
+    setPage(e);
+    setHasMore(false);
+    setReload(!reload);
   }
 
   return (
@@ -100,6 +101,7 @@ export default function Timeline() {
           />) : <Message>{message}</Message>}
           {hasMore ? <Loading /> : ''}
         </div>
+        <Trending/>
       </Main>
     </InfiniteScroll>
   );

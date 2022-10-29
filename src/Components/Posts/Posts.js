@@ -8,7 +8,7 @@ import Context from "../../Context";
 import LikesButton from "./LikesButton";
 import { getLikes } from "../../Services/Posts/likes";
 import { Container } from "./Posts.styles";
-
+import { ReactTagify } from "react-tagify";
 
 export default function Posts({ dataPost, picUrl, username, userId }) {
   const navigate = useNavigate();
@@ -17,21 +17,39 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
   const [editPost, setEditPost] = useState(false);
   const [text, setText] = useState(dataPost.postText);
 
+  const tagStyle = {
+    color: "white",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
+
   useEffect(() => {
     getLikes(dataPost.postId, user.token)
       .then(e => setLikes(e.data))
       .catch(e => '')
-
   }, [])
 
   return (
     <Container>
       <div className="post">
         <div className="top">
-          <img src={picUrl} alt='imagem usuario' />
+          <img src={picUrl} alt="imagem usuario" />
           <div className="infor">
             <h3 onClick={() => navigate(`/user/${userId}`)}>{username} </h3>
-            {editPost ? <TextEdit text={text} postId={dataPost.postId} /> : <p>{dataPost.postText}</p>}
+            {editPost ? (
+              <TextEdit text={text} postId={dataPost.postId} />
+            ) : (
+              <p>
+                <ReactTagify
+                  tagStyle={tagStyle}
+                  tagClicked={(hashtag) =>
+                    navigate(`/hashtag/${hashtag.replace("#", "")}`)
+                  }
+                >
+                  {dataPost.postText}
+                </ReactTagify>
+              </p>
+            )}
           </div>
           {Number(user.id) === Number(userId) ? <div className="editDelete">
             <EditPost editPost={editPost} setEditPost={setEditPost} />
@@ -40,13 +58,18 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
         </div>
 
         <div className="likeComment">
-          <LikesButton postId={dataPost.postId} userLike={likes.userLike} likes={likes} token={user.token} />
+          <LikesButton
+            postId={dataPost.postId}
+            userLike={likes.userLike}
+            likes={likes}
+            token={user.token}
+          />
         </div>
 
         <div
           className="dataLink"
           onClick={() => {
-            window.open(dataPost.postLink, '_blank');
+            window.open(dataPost.postLink, "_blank");
           }}
         >
           {
@@ -65,7 +88,6 @@ export default function Posts({ dataPost, picUrl, username, userId }) {
               )
           }
         </div>
-
       </div>
     </Container>
   );

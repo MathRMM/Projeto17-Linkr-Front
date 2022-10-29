@@ -17,14 +17,20 @@ export default function Topo() {
 
   return (
     <Header>
-      <Link to="/timeline"><h1>linkr</h1></Link>
+      <Link to="/timeline">
+        <h1>linkr</h1>
+      </Link>
       <SearchBar />
       <UserViewer userContext={user}>
-        <LogoutMenu icon={open ? <DownVector /> : <UpVector />} openState={open} setOpenState={setOpen} >
+        <LogoutMenu
+          icon={open ? <DownVector /> : <UpVector />}
+          openState={open}
+          setOpenState={setOpen}
+        >
           <DropDown />
         </LogoutMenu>
 
-        <img src={user.image} onClick={() => (setOpen(current => !current))} />
+        <img src={user.image} onClick={() => setOpen((current) => !current)} />
       </UserViewer>
     </Header>
   );
@@ -36,7 +42,7 @@ function LogoutMenu({ icon, openState, setOpenState, children }) {
 
   return (
     <>
-      <a href="#" onClick={() => (setOpen(current => !current))}>
+      <a href="#" onClick={() => setOpen((current) => !current)}>
         {icon}
       </a>
 
@@ -53,22 +59,23 @@ function DropDown() {
 
   function handleLogout() {
     if (loading) return;
-    setLoading(current => true);
-    getLogOut(user.token).then(res => {
-      localStorage.removeItem('token');
-      setUser(current => { });
-      setLoading(current => false);
-      navigate('/');
-      window.location.reload();
-      return;
-    }).catch(e => {
-      localStorage.removeItem('token');
-      setUser(current => { });
-      navigate('/');
-      window.location.reload();
-      console.log(e)
-    });
-
+    setLoading((current) => true);
+    getLogOut(user.token)
+      .then((res) => {
+        localStorage.removeItem("token");
+        setUser((current) => {});
+        setLoading((current) => false);
+        navigate("/");
+        window.location.reload();
+        return;
+      })
+      .catch((e) => {
+        localStorage.removeItem("token");
+        setUser((current) => {});
+        navigate("/");
+        window.location.reload();
+        console.log(e);
+      });
   }
 
   return (
@@ -77,9 +84,6 @@ function DropDown() {
     </div>
   );
 }
-
-
-
 
 const UserViewer = styled.header`
   display: relative;
@@ -101,7 +105,7 @@ const UserViewer = styled.header`
     border-radius: 2.65rem;
     margin-right: 1.7rem;
     cursor: pointer;
-  } 
+  }
 
   .drop-down {
     position: absolute;
@@ -123,8 +127,7 @@ const UserViewer = styled.header`
   .drop-down span {
     cursor: pointer;
   }
-
-`
+`;
 
 const Header = styled.header`
   display: flex;

@@ -32,8 +32,8 @@ const MainComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
   margin-bottom: 100px;
+  position: relative;
 
   width: 80%;
   h2 {

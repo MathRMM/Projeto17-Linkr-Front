@@ -10,20 +10,29 @@ export const Container = styled.div`
 
     box-shadow: 0rem 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     border-radius: 1.6rem;
-   
+
     background-color: #171717;
     font-family: "Lato";
     font-style: normal;
     font-weight: 400;
 
-    .top{
+    .top {
       display: flex;
       position: relative;
+
+      Img {
+        width: 5rem;
+        height: 5rem;
+
+        background: url(image);
+        border-radius: 2.65rem;
+      }
     }
 
     .infor {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: 0.7rem;
 
       h3 {
@@ -37,25 +46,24 @@ export const Container = styled.div`
         font-size: 1.7rem;
         color: #b7b7b7;
       }
-      span{
-          width: 10%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          div{
-            margin-left: 10%;
-          }
+      span {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        div {
+          margin-left: 10%;
+        }
       }
     }
 
-    .editDelete{
+    .editDelete {
       display: flex;
       gap: 8px;
       position: absolute;
       right: 0;
     }
 
-    .likeComment{
+    .likeComment {
       position: absolute;
       top: 90px;
       left: 2.3rem;
@@ -73,52 +81,49 @@ export const Container = styled.div`
       margin-left: 7rem;
       display: flex;
       justify-content: space-between;
-      
+
       .postContext {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-evenly;
         margin-left: 2rem;
-        
+
         .title {
           font-size: 1.6rem;
           color: #cecece;
         }
-        
+
         .description {
           font-size: 1.1rem;
           color: #9b9595;
         }
-        
+
         .link {
           line-height: 1.3rem;
           color: #cecece;
         }
       }
 
-      .postImg{
+      .postImg {
         height: 15.5rem;
       }
 
-      .postImg img{
-          height: 15.5rem;
-          width: 15.4rem;
-          border-radius: 0rem 1rem 1rem 0rem;
-          margin: 0 0 0 2.2rem;
-          object-fit: cover;
-          object-position: center;
+      .postImg img {
+        height: 15.5rem;
+        width: 15.4rem;
+        border-radius: 0rem 1rem 1rem 0rem;
+        margin: 0 0 0 2.2rem;
+        object-fit: cover;
+        object-position: center;
       }
 
-      .onlyLink{
-          font-size: 20px;
-          line-height: 150%;
-          color: blue;
-          margin-left: 1rem;
-        }
+      .onlyLink {
+        font-size: 20px;
+        line-height: 150%;
+        color: blue;
+        margin-left: 1rem;
+      }
     }
   }
 `;
-
-
-
