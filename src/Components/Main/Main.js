@@ -32,7 +32,6 @@ const MainComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
   margin-bottom: 100px;
 
   width: 80%;

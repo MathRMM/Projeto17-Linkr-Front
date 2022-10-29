@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect} from "react";
 import styled from "styled-components";
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -51,11 +51,10 @@ export default function Timeline() {
           setMessage(current => "No posts found from your friends :(");
         }
       }).catch(e => {
-        console.log(e);
+          return
       })
   })
 
-  console.log(page)
 
   function loadMore(e) {
     setPage(e)

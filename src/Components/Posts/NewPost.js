@@ -10,7 +10,6 @@ export default function NewPost({ user, reload, setReload, setPage, setPosts}) {
     function handleForm(e){
         e.preventDefault()
         setLoading(true)
-        console.log('aa')
         upPost({
             url: link,
             comment: text

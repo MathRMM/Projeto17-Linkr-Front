@@ -66,7 +66,6 @@ function DropDown() {
       setUser(current => { });
       navigate('/');
       window.location.reload();
-      console.log(e)
     });
 
   }

@@ -94,7 +94,7 @@ const Search = styled.div`
     }
 
     .autoComplete{
-        width: 40rem;
+        width: 50vw;
         box-sizing: content-box;
         background-color: #E7E7E7;
         border-radius: 20px;
@@ -136,6 +136,9 @@ const Search = styled.div`
         margin-left: 10%;
         bottom: -50px;
         .input{
+            width: 80vw;
+        }
+        .autoComplete{
             width: 80vw;
         }
     }
