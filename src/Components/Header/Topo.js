@@ -59,25 +59,6 @@ function DropDown() {
 
   function handleLogout() {
     if (loading) return;
-<<<<<<< HEAD
-    setLoading((current) => true);
-    getLogOut(user.token)
-      .then((res) => {
-        localStorage.removeItem("token");
-        setUser((current) => {});
-        setLoading((current) => false);
-        navigate("/");
-        window.location.reload();
-        return;
-      })
-      .catch((e) => {
-        localStorage.removeItem("token");
-        setUser((current) => {});
-        navigate("/");
-        window.location.reload();
-        console.log(e);
-      });
-=======
     setLoading(current => true);
     getLogOut(user.token).then(res => {
       localStorage.removeItem('token');
@@ -93,7 +74,6 @@ function DropDown() {
       window.location.reload();
     });
 
->>>>>>> feat/users
   }
 
   return (
