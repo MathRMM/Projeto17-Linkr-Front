@@ -8,6 +8,7 @@ export default function NewPost({ user, reload, setReload, setPage, setPosts }) 
   const [link, setLink] = useState('');
   const [text, setText] = useState('');
 
+<<<<<<< HEAD
   function handleForm(e) {
     e.preventDefault()
     setLoading(true)
@@ -24,6 +25,23 @@ export default function NewPost({ user, reload, setReload, setPage, setPosts }) 
   }
 
   return (
+=======
+    function handleForm(e){
+        e.preventDefault()
+        setLoading(true)
+        upPost({
+            url: link,
+            comment: text
+        }, user.token).then(e => {
+            setPage(1)
+            setPosts([])
+            setReload(!reload)
+            setLoading(false)
+        })
+    }
+    
+    return (
+>>>>>>> feat/users
         <div className="publish">
           <img src={user.image} alt='Imagem do usuario' />
           <div className="inputs">
