@@ -1,14 +1,16 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect} from "react";
 import styled from "styled-components";
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from "react-infinite-scroller";
 
 import Context from "../Context";
-import Topo from "../Components/Header/Topo";
 import Posts from "../Components/Posts/Posts";
-import Main from '../Components/Main/Main';
+import Main from "../Components/Main/Main";
 import NewPost from "../Components/Posts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
+import { getAllFollowing } from "../Services/Following/follow";
 import Loading from '../Components/Posts/helpers/Loading';
+import CountPosts from "../Components/Posts/helpers/CountPosts";
+import Trending from '../Components/Trending/Trending';
 
 
 export default function Timeline() {
@@ -18,59 +20,98 @@ export default function Timeline() {
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(1)
   const [reloadRender, setReloadRender] = useState(false)
+  const [message, setMessage] = useState('');
+
 
   useEffect(() => {
-    getPostsApi(page, user.token)
-      .then(e => {
-        if (!posts[0]) {
-          setPosts(e.data)
-          setHasMore(true)
+    getPostsApi(page, user.token).then((e) => {
+      if (!posts[0]) {
+        setPosts(e.data);
+        setHasMore(true);
+      }
+      if (e.data[0]) {
+        posts.push(...e.data);
+        setReloadRender(!reloadRender);
+        setHasMore(true);
+      } else {
+        setHasMore(false);
+      }
+    });
+  }, [reload]);
+
+  useEffect(() => {
+    setPosts(posts);
+  }, [reloadRender]);
+
+  useEffect(() => {
+    getAllFollowing(user.token)
+      .then(res => {
+        if (res.data.length === 0) {
+          setMessage(current => "You don't follow anyone yet. Search for new friends!");
+        } else if (posts.length === 0) {
+          setMessage(current => "No posts found from your friends :(");
         }
-        if (e.data[0]) {
-          posts.push(...e.data)
-          setReloadRender(!reloadRender)
-          setHasMore(true)
-        } else {
-          setHasMore(false)
-        }
+      }).catch(e => {
+          return
       })
-  }, [reload])
+  })
 
-  useEffect(() => {
-    setPosts(posts)
-  }, [reloadRender])
 
   function loadMore(e) {
-    setPage(e)
-    setHasMore(false)
-    setReload(!reload)
+    setPage(e);
+    setHasMore(false);
+    setReload(!reload);
   }
 
   return (
-<InfiniteScroll
-          pageStart={1}
-          loadMore={loadMore}
-          useWindow={true}
-          initialLoad={false}
-          hasMore={hasMore}
-          threshold={-50}
-        >
-    <Main>
-      <div >
-        <h2>timeline</h2>
+    <InfiniteScroll
+      pageStart={1}
+      loadMore={loadMore}
+      useWindow={true}
+      initialLoad={false}
+      hasMore={hasMore}
+      threshold={-50}
+    >
+      <Main>
+        <div >
+          <h2>timeline</h2>
 
-        <NewPost user={user} reload={reload} setReload={setReload} />
-        
-          {posts?.map(e => <Posts
+          <NewPost
+            user={user}
+            reload={reload}
+            setReload={setReload}
+            setPage={setPage}
+            setPosts={setPosts}
+          />
+
+          <CountPosts
+            user={user}
+            reload={reload}
+            setReload={setReload}
+            setPage={setPage}
+            posts={posts}
+            setPosts={setPosts}
+          />
+
+          {posts.length !== 0 ? posts.map(e => <Posts
             dataPost={e}
             picUrl={e.picUrl}
             username={e.username}
             userId={e.userId}
             key={e.postId}
-          />)}
-        {hasMore? <Loading /> : ''}
-      </div>
-    </Main>
-</InfiniteScroll>
+          />) : <Message>{message}</Message>}
+          {hasMore ? <Loading /> : ''}
+        </div>
+        <Trending/>
+      </Main>
+    </InfiniteScroll>
   );
 }
+
+const Message = styled.div`
+  color: white;
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+  padding-top: 2rem;
+`
