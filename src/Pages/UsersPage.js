@@ -40,7 +40,7 @@ export default function UsersPage() {
                 }
             })
             .catch(e => {
-                alert('An unexpected error has occured! Please try again.');
+                alert('An unexpected error has ocurred! Please try again.');
                 console.error(e);
             })
     }, [reload, account.token, userId])
