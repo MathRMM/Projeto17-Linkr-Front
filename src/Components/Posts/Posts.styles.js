@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { postLogin } from '../../Services/SignIn-SignUp/login';
 
 export const Container = styled.div`
+  width: 20%;
   .post {
     width: 61.1rem;
     min-height: 19rem;
@@ -124,6 +126,13 @@ export const Container = styled.div`
         color: blue;
         margin-left: 1rem;
       }
+    }
+  }
+
+  @media (max-width: 770px){
+    width: 50%;
+    .post{
+      width: 50%;
     }
   }
 `;

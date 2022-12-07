@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import tag from "../../Services/Tag/tag";
+import { tag } from "../../Services/Tag/tag";
 import Context from "../../Context";
 
 export default function Trending() {
@@ -72,14 +71,14 @@ const Container = styled.main`
     cursor: pointer;
   }
 
-  @media (max-width:1700px) {
+  @media (max-width: 1700px) {
     right: -8%;
   }
 
-  @media (max-width:1300px) {
+  @media (max-width: 1300px) {
     right: -15%;
   }
-  @media (max-width:1300px) {
+  @media (max-width: 1300px) {
     display: none;
   }
 `;

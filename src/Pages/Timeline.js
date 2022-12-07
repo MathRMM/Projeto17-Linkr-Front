@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import Context from "../Context";
 import Posts from "../Components/Posts/Posts";
 import Main from "../Components/Main/Main";
-import NewPost from "../Components/Posts/NewPost";
+import NewPost from "../Components/NewPosts/NewPost";
 import { getPostsApi } from "../Services/Posts/post";
 import { getAllFollowing } from "../Services/Following/follow";
 import Loading from '../Components/Posts/helpers/Loading';

@@ -55,10 +55,3 @@ export default function NewPost({ user, reload, setReload, setPage, setPosts }) 
        
   );
 }
-
-const Container = styled.div`
-  .teste {
-    display: flex;
-    gap: 2.5rem;
-  }
-`;

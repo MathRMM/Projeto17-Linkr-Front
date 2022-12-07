@@ -1,33 +1,19 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { ReactTagify } from "react-tagify";
 import styled from "styled-components";
-import axios from "axios";
 import Trending from "../Trending/Trending";
 import Topo from "../Header/Topo";
 import Context from "../../Context";
 import Posts from "./Posts";
+import { getTagByName } from "../../Services/Tag/tag";
 
 export default function PostTag() {
-  const tagStyle = {
-    color: "white",
-    fontWeight: 700,
-    cursor: "pointer",
-  };
-
-  const navigate = useNavigate();
   const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
   const [user] = useContext(Context);
-  const config = { headers: { authorization: "Bearer " + user.token } };
 
   useEffect(() => {
-    const promise = axios.get(
-      `http://localhost:5000/hashtag/${hashtag}`,
-      config
-    );
-
-    promise
+    getTagByName(hashtag, user.token)
       .then((res) => {
         setPosts(res.data);
       })
@@ -48,7 +34,7 @@ export default function PostTag() {
           <div className="screen">
             <div>
               <ul>
-                {posts.map((e, indice) => (
+                {posts.map((e) => (
                   <Posts
                     dataPost={e}
                     picUrl={e.picUrl}
