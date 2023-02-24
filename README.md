@@ -1,4 +1,4 @@
-# Acess this site in https://linkr-rouge.vercel.app/timeline
+# Acess this site in https://linkr-rouge.vercel.app
 
 # Getting Started with Create React App
 
